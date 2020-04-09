@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import Filter from './components/Filter'
 import Card from './components/Card'
 import * as hamburg from './data/hamburg.json'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import home from './images/home.svg'
 import profile from './images/profile.svg'
 import classroom from './images/class.svg'
@@ -56,50 +57,50 @@ function App() {
     <Router>
       <AppGrid>
         <HeaderSection>
-          <SelectFilter>
-            <Filter
-              options={schoolOption}
-              title={schoolName}
-              setValue={setSchoolvalue}
-            />
-
-            <Filter
-              options={classes}
-              title={classesTitle}
-              setValue={setClassesValue}
-            />
-            <Filter
-              options={subjects}
-              title={subjectsTitle}
-              setValue={setSubjectsValue}
-            />
-          </SelectFilter>
           <Nav>
-            <a href="/">
+            <StyledNavLink to="/">
               <NavIcon src={home}></NavIcon>
               <span>Home</span>
-            </a>
-            <a href="">
+            </StyledNavLink>
+            <StyledNavLink to="/favourite">
               <NavIcon src={fav}></NavIcon>
               <span>Meine Favoriten</span>
-            </a>
-            <a href="">
+            </StyledNavLink>
+            <StyledNavLink to="/classroom">
               <NavIcon src={classroom}></NavIcon>
               <span>Meine Klasse</span>
-            </a>
-            <a href="">
+            </StyledNavLink>
+            <StyledNavLink to="/plan">
               <NavIcon src={today}></NavIcon>
               <span>Mein Stundenplan</span>
-            </a>
-            <a href="">
+            </StyledNavLink>
+            <StyledNavLink to="/profile">
               <NavIcon src={profile}></NavIcon>
               <span>Meine Profil</span>
-            </a>
+            </StyledNavLink>
           </Nav>
         </HeaderSection>
 
         <Route path="/">
           <ContentWrapper>
+            <SelectFilter>
+              <Filter
+                options={schoolOption}
+                title={schoolName}
+                setValue={setSchoolvalue}
+              />
+
+              <Filter
+                options={classes}
+                title={classesTitle}
+                setValue={setClassesValue}
+              />
+              <Filter
+                options={subjects}
+                title={subjectsTitle}
+                setValue={setSubjectsValue}
+              />
+            </SelectFilter>
             <DescriptionSection>
               <h1>Home Schooling - Schule zu Hause</h1>
               <h2>Hier könnte noch etwas zum Inhalt stehen</h2>
@@ -126,6 +127,7 @@ function App() {
 export default App
 const NavIcon = styled.img`
   height: 24px;
+  margin: 6px;
 `
 const AppGrid = styled.section`
   display: grid;
@@ -136,22 +138,25 @@ const AppGrid = styled.section`
 `
 const HeaderSection = styled.header`
   display: flex;
-  align-items: center;
   flex-direction: column;
   background: linear-gradient(to left, #5e99cf, #5ebd99);
   box-shadow: 0 0 10px 2px #cfcfcf;
 `
 const Nav = styled.nav`
   display: flex;
-  width: 100%;
-  justify-content: space-evenly;
   align-items: center;
-  margin: 20px;
+  justify-content: space-evenly;
+  flex: 1;
+  margin: 20px 10px;
 `
-
+const StyledNavLink = styled(NavLink)`
+  display: flex;
+  align-items: center;
+`
 const ContentWrapper = styled.section`
   display: flex;
-  margin: 20px;
+  width: 100vw;
+
   flex-direction: column;
   justify-content: center;
 `
@@ -160,19 +165,18 @@ const DescriptionSection = styled.section`
   margin: 8px 20px;
   flex-direction: column;
   justify-content: center;
+  margin: 20px 80px 50px 50px;
 `
-
 const CardSection = styled.header`
   display: flex;
-  justify-content: space-between;
+  width: 100vw;
+  justify-content: flex-start;
   flex-wrap: wrap;
   background: transparent;
-  @media (max-width: 668px) {
-    flex-direction: column;
-    align-items: stretch;
-  }
+  margin: 0 50px;
   @media (max-width: 768px) {
-    justify-content: space-evenly;
+    justify-content: center;
+    margin: 0 50px 40px 0;
   }
 `
 const SelectFilter = styled.section`

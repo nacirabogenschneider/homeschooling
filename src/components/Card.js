@@ -28,7 +28,7 @@ const CardBox = styled.section`
   display: block;
   width: 220px;
   height: 300px;
-  margin: 12px 6px;
+  margin: 12px;
   background: linear-gradient(to right, #f7f6f2, #f1f1ee);
   border-radius: 14px;
   box-shadow: 0 0 10px 2px #cfcfcf;
