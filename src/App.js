@@ -4,12 +4,18 @@ import Filter from './components/Filter'
 import Card from './components/Card'
 import * as hamburg from './data/hamburg.json'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import home from './images/home.svg'
 import profile from './images/profile.svg'
 import classroom from './images/class.svg'
 import fav from './images/fav.svg'
 import today from './images/today.svg'
+import add from './images/add.svg'
+import Create from './components/Create'
+import Profile from './components/Profile'
+import Plan from './components/Plan'
+import Favourite from './components/Favourite'
+import Classroom from './components/Classroom'
 
 function App() {
   const hamburgSchool = hamburg.hamburg
@@ -80,44 +86,76 @@ function App() {
             </StyledNavLink>
           </Nav>
         </HeaderSection>
+        <ContentWrapper>
+          <Switch>
+            <Route exact path="/">
+              <SelectFilter>
+                <Filter
+                  options={schoolOption}
+                  title={schoolName}
+                  setValue={setSchoolvalue}
+                />
 
-        <Route path="/">
-          <ContentWrapper>
-            <SelectFilter>
-              <Filter
-                options={schoolOption}
-                title={schoolName}
-                setValue={setSchoolvalue}
-              />
-
-              <Filter
-                options={classes}
-                title={classesTitle}
-                setValue={setClassesValue}
-              />
-              <Filter
-                options={subjects}
-                title={subjectsTitle}
-                setValue={setSubjectsValue}
-              />
-            </SelectFilter>
-            <DescriptionSection>
-              <h1>Home Schooling - Schule zu Hause</h1>
-              <h2>Hier könnte noch etwas zum Inhalt stehen</h2>
-              <p>Und hier gibt es etwas zur Anwendung usw.</p>
-            </DescriptionSection>
-            <CardSection>
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-            </CardSection>
-          </ContentWrapper>
-        </Route>
+                <Filter
+                  options={classes}
+                  title={classesTitle}
+                  setValue={setClassesValue}
+                />
+                <Filter
+                  options={subjects}
+                  title={subjectsTitle}
+                  setValue={setSubjectsValue}
+                />
+              </SelectFilter>
+              <DescriptionSection>
+                <h1>Home Schooling - Schule zu Hause</h1>
+                <h2>Hier könnte noch etwas zum Inhalt stehen</h2>
+                <p>Und hier gibt es etwas zur Anwendung usw.</p>
+              </DescriptionSection>
+              <CardSection>
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+              </CardSection>
+            </Route>
+          </Switch>
+          <Switch>
+            <Route path="/create">
+              <Create />
+            </Route>
+          </Switch>
+          <Switch>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+          </Switch>
+          <Switch>
+            <Route path="/plan">
+              <Plan />
+            </Route>
+          </Switch>
+          <Switch>
+            <Route path="/favourite">
+              <Favourite />
+            </Route>
+          </Switch>
+          <Switch>
+            <Route path="/classroom">
+              <Classroom />
+            </Route>
+          </Switch>
+          <CreateButton to="/create">
+            <CreateButtonImage
+              src={add}
+              alt="create button"
+            ></CreateButtonImage>
+          </CreateButton>
+        </ContentWrapper>
         <FooterSection></FooterSection>
       </AppGrid>
     </Router>
@@ -131,7 +169,7 @@ const NavIcon = styled.img`
 `
 const AppGrid = styled.section`
   display: grid;
-  grid-template-rows: 1fr 1fr 120px;
+  grid-template-rows: 100px 1fr 120px;
   height: 100vh;
   width: 100vw;
   overflow-x: hidden;
@@ -173,7 +211,7 @@ const CardSection = styled.header`
   justify-content: flex-start;
   flex-wrap: wrap;
   background: transparent;
-  margin: 0 50px;
+  margin: 0 50px 50px 50px;
   @media (max-width: 768px) {
     justify-content: center;
     margin: 0 50px 40px 0;
@@ -186,4 +224,18 @@ const SelectFilter = styled.section`
 
 const FooterSection = styled.header`
   background: linear-gradient(to right, #5e99cf, #5ebd99);
+`
+const CreateButton = styled(Link)`
+  border: 3px solid #ffc000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: fixed;
+  right: 12px;
+  top: 90vh;
+  bottom: 10vh;
+`
+const CreateButtonImage = styled.img`
+  width: 50px;
+  height: 50px;
 `
