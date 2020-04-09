@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Filter from './components/Filter'
 import Card from './components/Card'
-// import { useSprings, animated } from 'react-spring'
 import * as hamburg from './data/hamburg.json'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import home from './images/home.svg'
+import profile from './images/profile.svg'
+import classroom from './images/class.svg'
+import fav from './images/fav.svg'
+import today from './images/today.svg'
 
 function App() {
   const hamburgSchool = hamburg.hamburg
@@ -48,64 +53,102 @@ function App() {
   ]
 
   return (
-    <AppGrid>
-      <HeaderSection>
-        <SelectFilter>
-          <Filter
-            options={schoolOption}
-            title={schoolName}
-            setValue={setSchoolvalue}
-          />
+    <Router>
+      <AppGrid>
+        <HeaderSection>
+          <SelectFilter>
+            <Filter
+              options={schoolOption}
+              title={schoolName}
+              setValue={setSchoolvalue}
+            />
 
-          <Filter
-            options={classes}
-            title={classesTitle}
-            setValue={setClassesValue}
-          />
-          <Filter
-            options={subjects}
-            title={subjectsTitle}
-            setValue={setSubjectsValue}
-          />
-        </SelectFilter>
-      </HeaderSection>
-      <ContentWrapper>
-        <DescriptionSection>
-          <h1>Home Schooling - Schule zu Hause</h1>
-          <h2>Hier könnte noch etwas zum Inhalt stehen</h2>
-          <p>Und hier gibt es etwas zur Anwendung usw.</p>
-        </DescriptionSection>
-        <CardSection>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+            <Filter
+              options={classes}
+              title={classesTitle}
+              setValue={setClassesValue}
+            />
+            <Filter
+              options={subjects}
+              title={subjectsTitle}
+              setValue={setSubjectsValue}
+            />
+          </SelectFilter>
+          <Nav>
+            <a href="/">
+              <NavIcon src={home}></NavIcon>
+              <span>Home</span>
+            </a>
+            <a href="">
+              <NavIcon src={fav}></NavIcon>
+              <span>Meine Favoriten</span>
+            </a>
+            <a href="">
+              <NavIcon src={classroom}></NavIcon>
+              <span>Meine Klasse</span>
+            </a>
+            <a href="">
+              <NavIcon src={today}></NavIcon>
+              <span>Mein Stundenplan</span>
+            </a>
+            <a href="">
+              <NavIcon src={profile}></NavIcon>
+              <span>Meine Profil</span>
+            </a>
+          </Nav>
+        </HeaderSection>
 
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </CardSection>
-      </ContentWrapper>
-      <FooterSection></FooterSection>
-    </AppGrid>
+        <Route path="/">
+          <ContentWrapper>
+            <DescriptionSection>
+              <h1>Home Schooling - Schule zu Hause</h1>
+              <h2>Hier könnte noch etwas zum Inhalt stehen</h2>
+              <p>Und hier gibt es etwas zur Anwendung usw.</p>
+            </DescriptionSection>
+            <CardSection>
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+            </CardSection>
+          </ContentWrapper>
+        </Route>
+        <FooterSection></FooterSection>
+      </AppGrid>
+    </Router>
   )
 }
 
 export default App
-
+const NavIcon = styled.img`
+  height: 24px;
+`
 const AppGrid = styled.section`
   display: grid;
-  grid-template-rows: 120px 1fr 120px;
+  grid-template-rows: 1fr 1fr 120px;
   height: 100vh;
   width: 100vw;
   overflow-x: hidden;
 `
+const HeaderSection = styled.header`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(to left, #5e99cf, #5ebd99);
+  box-shadow: 0 0 10px 2px #cfcfcf;
+`
+const Nav = styled.nav`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 20px;
+`
+
 const ContentWrapper = styled.section`
   display: flex;
   margin: 20px;
@@ -118,12 +161,7 @@ const DescriptionSection = styled.section`
   flex-direction: column;
   justify-content: center;
 `
-const HeaderSection = styled.header`
-  display: flex;
-  align-items: center;
-  background: linear-gradient(to left, #5e99cf, #5ebd99);
-  box-shadow: 0 0 10px 2px #cfcfcf;
-`
+
 const CardSection = styled.header`
   display: flex;
   justify-content: space-between;
