@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import Card from '../components/Card'
 import Filter from '../components/Filter'
@@ -18,6 +18,30 @@ export default function Create({
   const [createSchoolValue, setCreateSchoolValue] = useState()
   const [createClassValue, setCreateClassValue] = useState()
   const [createSubjectsValue, setCreateSubjectsValue] = useState()
+  const [color, setColor] = useState('white')
+
+  const sportColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+  const mathColor = 'linear-gradient(to right, #d82c2c, #a10808)'
+  const germanColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+  const artColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+  const musicColor = 'linear-gradient(to right,#f8ea6d, #ee7600)'
+  const religionColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+  const writingColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+  const readingColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+
+  useEffect(() => {
+    if (createSubjectsValue) {
+      const selectedSubject = createSubjectsValue.value
+      if (selectedSubject.label === 'Sport') {
+        setColor(sportColor)
+      } else if (selectedSubject.label === 'Mathematik') {
+        setColor(mathColor)
+      } else if (selectedSubject.label === 'Musik') {
+        setColor(musicColor)
+      }
+    }
+  }, [createSubjectsValue])
+
   function handleTitleChange(event) {
     setTitle(event.target.value)
   }
@@ -28,15 +52,17 @@ export default function Create({
   function handleAuthorChange(event) {
     setAuthor(event.target.value)
   }
-  console.log('createSchoolValue', createSchoolValue)
-  console.log('createClassValue', createClassValue)
-  console.log('createSubjectsValue', createSubjectsValue)
 
   return (
     <CreateSection>
       <h1>Erstelle eine neue Lernkarte</h1>
       <CardPreview>
-        <Card title={title} description={description} author={author} />
+        <Card
+          title={title}
+          description={description}
+          author={author}
+          color={color}
+        />
         <StyledForm>
           <H2Wrapper>
             <StyledH2>Basis-Informationen</StyledH2>

@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import bookmark from '../images/bookmark.svg'
 
-export default function Card({ title, description, author }) {
+export default function Card({ title, description, author, color }) {
   return (
-    <CardBox>
+    <CardBox style={{ background: color }}>
       <Image src={bookmark}></Image>
       <Preview></Preview>
       <StyledRows>
@@ -29,7 +29,7 @@ const CardBox = styled.section`
   width: 220px;
   height: 300px;
   margin: 12px;
-  background: linear-gradient(to right, #f7f6f2, #f1f1ee);
+  /* background: linear-gradient(to right, #f7f6f2, #f1f1ee); */
   border-radius: 14px;
   box-shadow: 0 0 10px 2px #cfcfcf;
 `
