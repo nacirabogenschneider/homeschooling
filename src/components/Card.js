@@ -6,6 +6,11 @@ export default function Card({ title, description, author, color }) {
   return (
     <CardBox style={{ background: color }}>
       <Image src={bookmark}></Image>
+      {/* <Bookmark
+        active={isBookmarked} // als Props durchgereicht
+        onClick={onBookmarkClick} 
+      /> */}
+
       <Preview></Preview>
       <StyledRows>
         <TextFieldH5>{title}</TextFieldH5>
@@ -29,7 +34,7 @@ const CardBox = styled.section`
   width: 220px;
   height: 300px;
   margin: 12px;
-  /* background: linear-gradient(to right, #f7f6f2, #f1f1ee); */
+
   border-radius: 14px;
   box-shadow: 0 0 10px 2px #cfcfcf;
 `

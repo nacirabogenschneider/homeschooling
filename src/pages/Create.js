@@ -68,9 +68,11 @@ export default function Create({
             <StyledH2>Basis-Informationen</StyledH2>
             <Img src={arrow} alt="toggle button"></Img>
           </H2Wrapper>
+
           <StyledLabel>
             <StyledH3>Titel der Lernkarte:</StyledH3>
             <StyledInput
+              maxLength="20"
               onChange={handleTitleChange}
               name="title"
               type="text"
@@ -81,6 +83,7 @@ export default function Create({
           <StyledLabel>
             <StyledH3> Kurzbeschreibung:</StyledH3>
             <StyledInput
+              maxLength="20"
               type="textarea"
               placeholder="Kurzbeschreibung"
               onChange={handleDescriptionChange}
@@ -90,6 +93,7 @@ export default function Create({
           <StyledLabel>
             <StyledH3>Autor:</StyledH3>
             <StyledInput
+              maxLength="20"
               onChange={handleAuthorChange}
               name="author"
               type="text"
@@ -102,7 +106,6 @@ export default function Create({
             title={schoolName}
             setValue={setCreateSchoolValue}
           />
-
           <Filter
             options={classes}
             title={classesTitle}
@@ -115,10 +118,10 @@ export default function Create({
           />
           <label style={{ margin: '8px 20px' }}>
             <p> Dateiupload:</p>
-            <input
+            <StyledInput
               type="file"
               placeholder="Freitext als einleitende Erleuterung"
-            ></input>
+            ></StyledInput>
           </label>
         </StyledForm>
       </CardPreview>
@@ -136,9 +139,12 @@ const CardPreview = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 const StyledForm = styled.form`
-  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -147,6 +153,9 @@ const StyledForm = styled.form`
   border: 2px solid lightgrey;
   padding: 24px;
   border-radius: 12px;
+  @media (max-width: 420px) {
+    width: 240px;
+  }
 `
 const StyledLabel = styled.label`
   margin: 20px 20px;
@@ -171,6 +180,7 @@ const StyledInput = styled.input`
   border: 1px solid lightgrey;
   background: white;
 `
+
 const Img = styled.img`
   height: 20px;
 `
