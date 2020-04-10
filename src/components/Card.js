@@ -6,10 +6,6 @@ export default function Card({ title, description, author, color }) {
   return (
     <CardBox style={{ background: color }}>
       <Image src={bookmark}></Image>
-      {/* <Bookmark
-        active={isBookmarked} // als Props durchgereicht
-        onClick={onBookmarkClick} 
-      /> */}
 
       <Preview></Preview>
       <StyledRows>

@@ -13,7 +13,7 @@ import { Transition } from 'react-spring/renderprops'
 export default function Navigation() {
   const [toggle, setToggle] = useState(false)
   const onToggle = () => setToggle(!toggle)
-  console.log('Toogle', toggle)
+
   return (
     <>
       <Nav>
@@ -116,25 +116,31 @@ const MobileNav = styled.div`
   width: 100vw;
   height: auto;
   background: white;
-  border-bottom: 1px solid lightgrey;
+  border: 1px solid lightgrey;
 `
 const MobileNavWrapper = styled.nav`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  z-index: 300;
+  display: none;
+
+  @media (max-width: 576px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    z-index: 300;
+  }
 `
 const Menu = styled.div`
   display: none;
   @media (max-width: 576px) {
+    width: 100vw;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
   }
 `
 const MenuIcon = styled.img`
   height: 50px;
+  padding: 10px;
 `
 const StyledNavLink = styled(NavLink)`
   display: flex;
