@@ -16,7 +16,7 @@ export default function Filter({ options, title, setValue }) {
 const FilterWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 30px;
+  margin: 22px 20px;
 `
 const H3 = styled.h3`
   margin: 0 0 10px 0;

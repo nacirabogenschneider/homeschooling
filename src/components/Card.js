@@ -2,19 +2,19 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import bookmark from '../images/bookmark.svg'
 
-export default function Card() {
+export default function Card({ title, description, author }) {
   return (
     <CardBox>
       <Image src={bookmark}></Image>
       <Preview></Preview>
       <StyledRows>
-        <TextFieldH5>Thema</TextFieldH5>
+        <TextFieldH5>{title}</TextFieldH5>
       </StyledRows>
       <StyledRows>
-        <TextField>Beschreibung</TextField>
+        <TextField>{description}</TextField>
       </StyledRows>
       <StyledRows>
-        <TextField>Autor</TextField>
+        <TextField>{author}</TextField>
       </StyledRows>
       <ButtonWrapper>
         <StyledButton></StyledButton>

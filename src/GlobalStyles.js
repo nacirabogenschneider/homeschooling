@@ -10,7 +10,7 @@ export default createGlobalStyle`
   }
   a{
     text-decoration: none;
-    color: rgb(255 192 0);
+    color: #fff;
     font-family: 'Inter', sans-serif;
   }
  h1{

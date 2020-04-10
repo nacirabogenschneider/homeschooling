@@ -4,18 +4,15 @@ import Filter from './components/Filter'
 import Card from './components/Card'
 import * as hamburg from './data/hamburg.json'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { NavLink, Link } from 'react-router-dom'
-import home from './images/home.svg'
-import profile from './images/profile.svg'
-import classroom from './images/class.svg'
-import fav from './images/fav.svg'
-import today from './images/today.svg'
+import { Link } from 'react-router-dom'
+
 import add from './images/add.svg'
-import Create from './components/Create'
-import Profile from './components/Profile'
-import Plan from './components/Plan'
-import Favourite from './components/Favourite'
-import Classroom from './components/Classroom'
+import Create from './pages/Create'
+import Profile from './pages/Profile'
+import Plan from './pages/Plan'
+import Favourite from './pages/Favourite'
+import Classroom from './pages/Classroom'
+import Navigation from './components/Navigation'
 
 function App() {
   const hamburgSchool = hamburg.hamburg
@@ -26,9 +23,7 @@ function App() {
   const [classesValue, setClassesValue] = useState({})
   const [subjectsValue, setSubjectsValue] = useState({})
   const [schoolValue, setSchoolvalue] = useState({})
-  console.log('classesValue', classesValue)
-  console.log('subjectsValue', subjectsValue)
-  console.log('schoolValue', schoolValue)
+
   useEffect(() => {
     setSchoolOption(
       hamburgSchool.map((school) => ({
@@ -63,28 +58,7 @@ function App() {
     <Router>
       <AppGrid>
         <HeaderSection>
-          <Nav>
-            <StyledNavLink to="/">
-              <NavIcon src={home}></NavIcon>
-              <span>Home</span>
-            </StyledNavLink>
-            <StyledNavLink to="/favourite">
-              <NavIcon src={fav}></NavIcon>
-              <span>Meine Favoriten</span>
-            </StyledNavLink>
-            <StyledNavLink to="/classroom">
-              <NavIcon src={classroom}></NavIcon>
-              <span>Meine Klasse</span>
-            </StyledNavLink>
-            <StyledNavLink to="/plan">
-              <NavIcon src={today}></NavIcon>
-              <span>Mein Stundenplan</span>
-            </StyledNavLink>
-            <StyledNavLink to="/profile">
-              <NavIcon src={profile}></NavIcon>
-              <span>Meine Profil</span>
-            </StyledNavLink>
-          </Nav>
+          <Navigation />
         </HeaderSection>
         <ContentWrapper>
           <Switch>
@@ -112,21 +86,30 @@ function App() {
                 <h2>Hier könnte noch etwas zum Inhalt stehen</h2>
                 <p>Und hier gibt es etwas zur Anwendung usw.</p>
               </DescriptionSection>
-              <CardSection>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-              </CardSection>
+              <CardSectionWrapper>
+                <CardSection>
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                </CardSection>
+              </CardSectionWrapper>
             </Route>
           </Switch>
           <Switch>
             <Route path="/create">
-              <Create />
+              <Create
+                schoolOption={schoolOption}
+                schoolName={schoolName}
+                classes={classes}
+                classesTitle={classesTitle}
+                subjects={subjects}
+                subjectsTitle={subjectsTitle}
+              />
             </Route>
           </Switch>
           <Switch>
@@ -163,10 +146,7 @@ function App() {
 }
 
 export default App
-const NavIcon = styled.img`
-  height: 24px;
-  margin: 6px;
-`
+
 const AppGrid = styled.section`
   display: grid;
   grid-template-rows: 100px 1fr 120px;
@@ -180,17 +160,7 @@ const HeaderSection = styled.header`
   background: linear-gradient(to left, #5e99cf, #5ebd99);
   box-shadow: 0 0 10px 2px #cfcfcf;
 `
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex: 1;
-  margin: 20px 10px;
-`
-const StyledNavLink = styled(NavLink)`
-  display: flex;
-  align-items: center;
-`
+
 const ContentWrapper = styled.section`
   display: flex;
   width: 100vw;
@@ -205,21 +175,28 @@ const DescriptionSection = styled.section`
   justify-content: center;
   margin: 20px 80px 50px 50px;
 `
+const CardSectionWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+`
 const CardSection = styled.header`
   display: flex;
   width: 100vw;
   justify-content: flex-start;
   flex-wrap: wrap;
   background: transparent;
-  margin: 0 50px 50px 50px;
+  margin: 0 50px;
   @media (max-width: 768px) {
+    margin: 0 0 50px 0;
     justify-content: center;
-    margin: 0 50px 40px 0;
   }
 `
 const SelectFilter = styled.section`
   display: flex;
-  padding: 0 20px;
+  width: 100vw;
+  flex-wrap: wrap;
+  margin: 8px 20px;
 `
 
 const FooterSection = styled.header`
