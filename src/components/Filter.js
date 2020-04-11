@@ -7,6 +7,7 @@ export default function Filter({ options, title, setValue }) {
     <FilterWrapper>
       <H3>{title}</H3>
       <StyledSelect
+        placeholder="auswählen..."
         options={options}
         onChange={(value) => setValue({ value })}
       />
@@ -24,4 +25,7 @@ const H3 = styled.h3`
 
 const StyledSelect = styled(Select)`
   width: 200px;
+  &:focus {
+    box-shadow: 0 0 10px 2px orange;
+  }
 `

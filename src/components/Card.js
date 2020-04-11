@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import bookmark from '../images/bookmark.svg'
+import pink from '../images/pink.svg'
 
-export default function Card({ title, description, author, color }) {
+export default function Card({
+  title,
+  description,
+  author,
+  color,
+  setIsBookmarked,
+  isBookmarked,
+}) {
+  const [fav, setFav] = useState(true)
+  const bookmarking = () => {
+    setFav(!fav)
+  }
+  useEffect(() => {
+    setIsBookmarked && setIsBookmarked(!isBookmarked)
+  }, [fav])
+
   return (
     <CardBox style={{ background: color }}>
-      <Image src={bookmark}></Image>
-
+      <Image src={fav ? bookmark : pink} onClick={bookmarking}></Image>
       <Preview></Preview>
       <StyledRows>
         <TextFieldH5>{title}</TextFieldH5>
@@ -15,7 +30,7 @@ export default function Card({ title, description, author, color }) {
         <TextField>{description}</TextField>
       </StyledRows>
       <StyledRows>
-        <TextField>{author}</TextField>
+        <TextFieldAuthor>{author}</TextFieldAuthor>
       </StyledRows>
       <ButtonWrapper>
         <StyledButton></StyledButton>
@@ -30,7 +45,6 @@ const CardBox = styled.section`
   width: 220px;
   height: 300px;
   margin: 12px;
-
   border-radius: 14px;
   box-shadow: 0 0 10px 2px #cfcfcf;
 `
@@ -41,6 +55,9 @@ const Preview = styled.div`
   box-shadow: inset 0 0 6px 2px #cfcfcf;
 `
 const StyledRows = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   height: 30px;
   background: white;
   margin: 4px 8px;
@@ -76,6 +93,12 @@ const TextFieldH5 = styled.h5`
 `
 const TextField = styled.p`
   font-size: 14px;
+  margin: 0;
+  padding: 4px 8px;
+  color: grey;
+`
+const TextFieldAuthor = styled.small`
+  font-size: 0.7rem;
   margin: 0;
   padding: 4px 8px;
   color: grey;

@@ -23,6 +23,7 @@ function App() {
   const [classesValue, setClassesValue] = useState({})
   const [subjectsValue, setSubjectsValue] = useState({})
   const [schoolValue, setSchoolvalue] = useState({})
+  const [cards, setCards] = useState([])
 
   useEffect(() => {
     setSchoolOption(
@@ -103,6 +104,8 @@ function App() {
           <Switch>
             <Route path="/create">
               <Create
+                cards={cards}
+                setCards={setCards}
                 schoolOption={schoolOption}
                 schoolName={schoolName}
                 classes={classes}
@@ -164,7 +167,6 @@ const HeaderSection = styled.header`
 const ContentWrapper = styled.section`
   display: flex;
   width: 100vw;
-
   flex-direction: column;
   justify-content: center;
 `
