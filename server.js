@@ -1,10 +1,16 @@
 var express = require('express')
-var app = express()
-var multer = require('multer')
 var cors = require('cors')
+var app = express()
 
 app.use(cors())
 
+app.get('/', function (req, res, next) {
+  res.json({ msg: 'This is CORS-enabled for all origins!' })
+})
+
+app.listen(5005, function () {
+  console.log('Example app listening on port 5005! Open http://localhost:5005')
+})
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public')

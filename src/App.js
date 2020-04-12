@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import Filter from './components/Filter'
 import Card from './components/Card'
 import * as hamburg from './data/hamburg.json'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-
 import add from './images/add.svg'
 import Create from './pages/Create'
 import Profile from './pages/Profile'
@@ -13,6 +11,10 @@ import Plan from './pages/Plan'
 import Favourite from './pages/Favourite'
 import Classroom from './pages/Classroom'
 import Navigation from './components/Navigation'
+import RenderCards from './components/RenderCards'
+import Filter from './components/Filter'
+import close from './images/close.svg'
+import bookmark from './images/bookmark.svg'
 
 function App() {
   const hamburgSchool = hamburg.hamburg
@@ -54,7 +56,15 @@ function App() {
     { value: 'Religion', label: 'Religion' },
     { value: 'Biologie', label: 'Biologie' },
   ]
+  function handleCreateCardClick(event) {
+    console.log('Kann bearbeitet werden', event.target.id)
+    const foundCard = cards.find((card) => card.id === event.target.id)
+  }
 
+  function handleCloseClick(event) {
+    const newCardArray = cards.filter((card) => card.id !== event.target.id)
+    setCards(newCardArray)
+  }
   return (
     <Router>
       <AppGrid>
@@ -89,30 +99,38 @@ function App() {
               </DescriptionSection>
               <CardSectionWrapper>
                 <CardSection>
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
+                  <Card bookmark={bookmark} />
+                  <Card bookmark={bookmark} />
+                  <Card bookmark={bookmark} />
+                  <Card bookmark={bookmark} />
+                  <Card bookmark={bookmark} />
+                  <Card bookmark={bookmark} />
                 </CardSection>
               </CardSectionWrapper>
             </Route>
           </Switch>
           <Switch>
             <Route path="/create">
-              <Create
-                cards={cards}
-                setCards={setCards}
-                schoolOption={schoolOption}
-                schoolName={schoolName}
-                classes={classes}
-                classesTitle={classesTitle}
-                subjects={subjects}
-                subjectsTitle={subjectsTitle}
-              />
+              <YousCards>
+                <CardSection>
+                  <RenderCards
+                    close={close}
+                    handleCloseClick={handleCloseClick}
+                    handleCardClick={handleCreateCardClick}
+                    cards={cards}
+                  />
+                </CardSection>
+                <Create
+                  cards={cards}
+                  setCards={setCards}
+                  schoolOption={schoolOption}
+                  schoolName={schoolName}
+                  classes={classes}
+                  classesTitle={classesTitle}
+                  subjects={subjects}
+                  subjectsTitle={subjectsTitle}
+                />
+              </YousCards>
             </Route>
           </Switch>
           <Switch>
@@ -149,7 +167,12 @@ function App() {
 }
 
 export default App
-
+const YousCards = styled.div`
+  margin-top: 40px;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+`
 const AppGrid = styled.section`
   display: grid;
   grid-template-rows: 100px 1fr 120px;

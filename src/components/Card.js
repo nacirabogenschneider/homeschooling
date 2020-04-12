@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import bookmark from '../images/bookmark.svg'
 import pink from '../images/pink.svg'
 
 export default function Card({
@@ -10,6 +9,11 @@ export default function Card({
   color,
   setIsBookmarked,
   isBookmarked,
+  id,
+  handleCardClick,
+  handleCloseClick,
+  close,
+  bookmark,
 }) {
   const [fav, setFav] = useState(true)
   const bookmarking = () => {
@@ -20,7 +24,8 @@ export default function Card({
   }, [fav])
 
   return (
-    <CardBox style={{ background: color }}>
+    <CardBox style={{ background: color }} id={id} onClick={handleCardClick}>
+      <ImgClose src={close} id={id} onClick={handleCloseClick}></ImgClose>
       <Image src={fav ? bookmark : pink} onClick={bookmarking}></Image>
       <Preview></Preview>
       <StyledRows>
@@ -33,6 +38,7 @@ export default function Card({
         <TextFieldAuthor>{author}</TextFieldAuthor>
       </StyledRows>
       <ButtonWrapper>
+        <StyledButton></StyledButton>
         <StyledButton></StyledButton>
         <StyledButton></StyledButton>
       </ButtonWrapper>
@@ -70,6 +76,12 @@ const Image = styled.img`
   top: -5px;
   text-shadow: 0 0 6px 2px green;
 `
+const ImgClose = styled.img`
+  position: relative;
+  height: 26px;
+  top: -5px;
+  left: 4px;
+`
 const StyledButton = styled.div`
   border: none;
   margin: 0 4px;
@@ -82,7 +94,7 @@ const StyledButton = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   position: relative;
-  left: 160px;
+  right: -130px;
   bottom: -5px;
 `
 const TextFieldH5 = styled.h5`

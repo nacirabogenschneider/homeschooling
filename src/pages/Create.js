@@ -3,7 +3,9 @@ import styled from 'styled-components/macro'
 import Card from '../components/Card'
 import Filter from '../components/Filter'
 import arrow from '../images/close.svg'
-import axios from 'axios'
+import uuid from 'react-uuid'
+import close from '../images/close.svg'
+import bookmark from '../images/bookmark.svg'
 
 export default function Create({
   schoolOption,
@@ -33,7 +35,7 @@ export default function Create({
   const religionColor = 'linear-gradient(to right,#84d9f3, #1697be)'
   const writingColor = 'linear-gradient(to right,#84d9f3, #1697be)'
   const readingColor = 'linear-gradient(to right,#84d9f3, #1697be)'
-
+  const authorId = uuid()
   useEffect(() => {
     if (createSubjectsValue) {
       const selectedSubject = createSubjectsValue.value
@@ -57,9 +59,25 @@ export default function Create({
   function handleAuthorChange(event) {
     setAuthor(event.target.value)
   }
-
+  console.log('Cards', cards)
   function handleSubmit(event) {
     event.preventDefault()
+    setCards([
+      ...cards,
+      {
+        id: uuid(),
+        title: title,
+        description: description,
+        author: author,
+        authorId: authorId,
+        bookmarked: false,
+        upload: upload,
+        school: createSchoolValue.value.label,
+        classroom: createClassValue.value.label,
+        subject: createSubjectsValue.value.label,
+        color: color,
+      },
+    ])
   }
 
   function handleUpload(event) {
@@ -68,11 +86,9 @@ export default function Create({
   }
 
   function onUploadClick() {
-    const data = new FormData()
-    data.append('file', upload)
+    console.log('Button Klicked')
   }
 
-  console.log('Upload with loaded', upload)
   return (
     <CreateSection>
       <StyledHeading>Erstelle eine neue Lernkarte</StyledHeading>

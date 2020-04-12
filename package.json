@@ -7,6 +7,9 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "0.19.2",
+    "cors": "2.8.5",
+    "express": "4.17.1",
+    "http-server": "0.12.1",
     "kind-of": "6.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -15,13 +18,16 @@
     "react-scripts": "3.4.1",
     "react-select": "3.1.0",
     "react-spring": "^8.0.27",
+    "react-uuid": "1.0.2",
     "styled-components": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "http": "http-server -p 5006",
+    "api": "node server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
