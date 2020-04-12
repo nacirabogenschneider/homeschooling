@@ -27,14 +27,16 @@ export default function Create({
   const [isBookmarked, setIsBookmarked] = useState(true)
   const [upload, setUpload] = useState([])
 
-  const sportColor = 'linear-gradient(to right,#84d9f3, #1697be)'
-  const mathColor = 'linear-gradient(to right, #a10808 , #f34c36 )'
-  const germanColor = 'linear-gradient(to right,#84d9f3, #1697be)'
-  const artColor = 'linear-gradient(to right,#84d9f3, #1697be)'
-  const musicColor = 'linear-gradient(to right,#f8ea6d, #ee7600)'
-  const religionColor = 'linear-gradient(to right,#84d9f3, #1697be)'
-  const writingColor = 'linear-gradient(to right,#84d9f3, #1697be)'
-  const readingColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+  const sportColor = 'linear-gradient(to right, #1697be, #84d9f3)'
+  const mathColor = 'linear-gradient(to right , #a10808, #f34c36 )'
+  const germanColor = 'linear-gradient(to right,#073ead, #53aff5)'
+  const artColor = 'linear-gradient(to right, #1e9fb3 ,#6a07a3, #a3078e, #f7f42a)'
+  const musicColor = 'linear-gradient(to right, #ee7600,#f8ea6d)'
+  const religionColor = 'linear-gradient(to right,#360666, #b907eb)'
+  const bioColor = 'linear-gradient(to right,darkgreen, #00bf43)'
+  const englishColor = 'linear-gradient(to right,#026fb8, #04c96d)'
+  const theaterColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+
   const authorId = uuid()
   useEffect(() => {
     if (createSubjectsValue) {
@@ -45,7 +47,17 @@ export default function Create({
         setColor(mathColor)
       } else if (selectedSubject.label === 'Musik') {
         setColor(musicColor)
-      }
+      } else if (selectedSubject.label === 'Deutsch') {
+        setColor(germanColor)
+      }  else if (selectedSubject.label === 'Kunst') {
+        setColor(artColor)
+      } else if (selectedSubject.label === 'Theater') {
+        setColor(theaterColor)
+      } else if (selectedSubject.label === 'Englisch') {
+        setColor(englishColor)
+      } else if (selectedSubject.label === 'Sachkunde') {
+        setColor(bioColor)
+      }else setColor(religionColor)
     }
   }, [createSubjectsValue])
 

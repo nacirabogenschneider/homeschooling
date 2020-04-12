@@ -47,14 +47,13 @@ function App() {
   const subjects = [
     { value: 'Mathematik', label: 'Mathematik' },
     { value: 'Deutsch', label: 'Deutsch' },
+    { value: 'Englisch', label: 'Englisch' },
     { value: 'Sport', label: 'Sport' },
     { value: 'Musik', label: 'Musik' },
     { value: 'Kunst', label: 'Kunst' },
-    { value: 'Lesen', label: 'Lesen' },
-    { value: 'Schreiben', label: 'Schreiben' },
     { value: 'Sachkunde', label: 'Sachkunde' },
     { value: 'Religion', label: 'Religion' },
-    { value: 'Biologie', label: 'Biologie' },
+    { value: 'Theater', label: 'Theater' },
   ]
   function handleCreateCardClick(event) {
     console.log('Kann bearbeitet werden', event.target.id)
