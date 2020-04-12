@@ -17,15 +17,18 @@ export default function Create({
   cards,
   setCards,
 }) {
-  const [title, setTitle] = useState('Titel der Karte')
-  const [description, setDescription] = useState('Kurzbeschreibung')
-  const [author, setAuthor] = useState('Name des Autors')
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [author, setAuthor] = useState('')
   const [createSchoolValue, setCreateSchoolValue] = useState()
   const [createClassValue, setCreateClassValue] = useState()
   const [createSubjectsValue, setCreateSubjectsValue] = useState()
   const [color, setColor] = useState('white')
   const [isBookmarked, setIsBookmarked] = useState(true)
   const [upload, setUpload] = useState([])
+  const [schoolrequired, setSchoolRequired] = useState('')
+  const [classRequired, setClassRequired] = useState('')
+  const [subjectsRequired, setSubjectsRequired] = useState('')
 
   const sportColor = 'linear-gradient(to right, #1697be, #84d9f3)'
   const mathColor = 'linear-gradient(to right , #a10808, #f34c36 )'
@@ -36,7 +39,9 @@ export default function Create({
   const bioColor = 'linear-gradient(to right,darkgreen, #00bf43)'
   const englishColor = 'linear-gradient(to right,#026fb8, #04c96d)'
   const theaterColor = 'linear-gradient(to right,#84d9f3, #1697be)'
+  const medienColor=  'linear-gradient(to right,#b9f728, #fc1287)'
 
+  const required = 'required'
   const authorId = uuid()
   useEffect(() => {
     if (createSubjectsValue) {
@@ -57,6 +62,8 @@ export default function Create({
         setColor(englishColor)
       } else if (selectedSubject.label === 'Sachkunde') {
         setColor(bioColor)
+      } else if (selectedSubject.label === 'Medien') {
+        setColor(medienColor)
       }else setColor(religionColor)
     }
   }, [createSubjectsValue])
@@ -74,7 +81,7 @@ export default function Create({
   console.log('Cards', cards)
   function handleSubmit(event) {
     event.preventDefault()
-    setCards([
+    if(createSchoolValue &&  createClassValue  && createSubjectsValue){ setCards([
       ...cards,
       {
         id: uuid(),
@@ -89,7 +96,8 @@ export default function Create({
         subject: createSubjectsValue.value.label,
         color: color,
       },
-    ])
+    ]) 
+  } 
   }
 
   function handleUpload(event) {
@@ -121,6 +129,8 @@ export default function Create({
           <StyledLabel>
             <StyledH3>Titel der Lernkarte:</StyledH3>
             <StyledInput
+              required
+              value={title}
               maxLength="20"
               onChange={handleTitleChange}
               name="title"
@@ -130,7 +140,11 @@ export default function Create({
           </StyledLabel>
           <StyledLabel>
             <StyledH3> Kurzbeschreibung:</StyledH3>
+              
             <StyledInput
+            required
+            name="description"
+              value={description}
               maxLength="20"
               type="textarea"
               placeholder="Kurzbeschreibung"
@@ -140,6 +154,9 @@ export default function Create({
           <StyledLabel>
             <StyledH3>Autor:</StyledH3>
             <StyledInput
+                  name="author"
+            required
+            value={author}
               maxLength="32"
               onChange={handleAuthorChange}
               name="author"
@@ -148,16 +165,23 @@ export default function Create({
             ></StyledInput>
           </StyledLabel>
           <Filter
+            required={required}
+            value={createClassValue}
             options={schoolOption}
             title={schoolName}
             setValue={setCreateSchoolValue}
           />
+      
           <Filter
+            required={required}
+            value={createClassValue}
             options={classes}
             title={classesTitle}
             setValue={setCreateClassValue}
           />
           <Filter
+            required={required}
+            value={createSubjectsValue}
             options={subjects}
             title={subjectsTitle}
             setValue={setCreateSubjectsValue}
@@ -166,6 +190,7 @@ export default function Create({
             <label style={{ margin: '8px 20px' }}>
               <StyledH3> Dateiupload:</StyledH3>
               <StyledInputUpload
+                value={upload}
                 type="file"
                 name="file"
                 onChange={handleUpload}
@@ -176,7 +201,7 @@ export default function Create({
               Upload
             </button>
           </div>
-          <StyledSubmitButton type="submit">Speichern</StyledSubmitButton>
+          <StyledSubmitButton type="submit" >Speichern</StyledSubmitButton>
         </StyledForm>
       </CardPreview>
     </CreateSection>

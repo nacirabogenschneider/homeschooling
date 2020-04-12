@@ -48,6 +48,7 @@ function App() {
     { value: 'Mathematik', label: 'Mathematik' },
     { value: 'Deutsch', label: 'Deutsch' },
     { value: 'Englisch', label: 'Englisch' },
+    { value: 'Medien', label: 'Medien' },
     { value: 'Sport', label: 'Sport' },
     { value: 'Musik', label: 'Musik' },
     { value: 'Kunst', label: 'Kunst' },
@@ -75,17 +76,20 @@ function App() {
             <Route exact path="/">
               <SelectFilter>
                 <Filter
+                 required={false}
                   options={schoolOption}
                   title={schoolName}
                   setValue={setSchoolvalue}
                 />
 
                 <Filter
+                     required={false}
                   options={classes}
                   title={classesTitle}
                   setValue={setClassesValue}
                 />
                 <Filter
+                     required={false}
                   options={subjects}
                   title={subjectsTitle}
                   setValue={setSubjectsValue}
