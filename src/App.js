@@ -15,6 +15,7 @@ import RenderCards from './components/RenderCards'
 import Filter from './components/Filter'
 import close from './images/close.svg'
 import bookmark from './images/bookmark.svg'
+import RenderCard from './components/RenderCards'
 
 function App() {
   const hamburgSchool = hamburg.hamburg
@@ -26,6 +27,34 @@ function App() {
   const [subjectsValue, setSubjectsValue] = useState({})
   const [schoolValue, setSchoolvalue] = useState({})
   const [cards, setCards] = useState([])
+  const [levelStyle, setLevelStyle] = useState([
+    { styleLevelBetter: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
+    { styleLevelNormal: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
+    { styleLevelLow: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
+  ])
+  const [level, setLevel] = useState('')
+
+  useEffect(() => {
+    if (level === 'better') {
+      setLevelStyle([
+        { styleLevelBetter: { boxShadow: 'inset 0 0 6px 2px green' } },
+        { styleLevelNormal: { boxShadow: 'inset 0 0 6px 2px green' } },
+        { styleLevelLow: { boxShadow: 'inset 0 0 6px 2px green' } },
+      ])
+    } else if (level === 'normal') {
+      setLevelStyle([
+        { styleLevelBetter: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
+        { styleLevelNormal: { boxShadow: 'inset 0 0 6px 2px green' } },
+        { styleLevelLow: { boxShadow: 'inset 0 0 6px 2px green' } },
+      ])
+    } else if (level === 'low') {
+      setLevelStyle([
+        { styleLevelBetter: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
+        { styleLevelNormal: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
+        { styleLevelLow: { boxShadow: 'inset 0 0 6px 2px green' } },
+      ])
+    }
+  }, [level, setLevelStyle])
 
   useEffect(() => {
     setSchoolOption(
@@ -56,6 +85,7 @@ function App() {
     { value: 'Religion', label: 'Religion' },
     { value: 'Theater', label: 'Theater' },
   ]
+
   function handleCreateCardClick(event) {
     console.log('Kann bearbeitet werden', event.target.id)
     const foundCard = cards.find((card) => card.id === event.target.id)
@@ -76,20 +106,20 @@ function App() {
             <Route exact path="/">
               <SelectFilter>
                 <Filter
-                 required={false}
+                  required={false}
                   options={schoolOption}
                   title={schoolName}
                   setValue={setSchoolvalue}
                 />
 
                 <Filter
-                     required={false}
+                  required={false}
                   options={classes}
                   title={classesTitle}
                   setValue={setClassesValue}
                 />
                 <Filter
-                     required={false}
+                  required={false}
                   options={subjects}
                   title={subjectsTitle}
                   setValue={setSubjectsValue}
@@ -102,12 +132,13 @@ function App() {
               </DescriptionSection>
               <CardSectionWrapper>
                 <CardSection>
-                  <Card bookmark={bookmark} />
-                  <Card bookmark={bookmark} />
-                  <Card bookmark={bookmark} />
-                  <Card bookmark={bookmark} />
-                  <Card bookmark={bookmark} />
-                  <Card bookmark={bookmark} />
+                  <RenderCards
+                    levelStyle={levelStyle}
+                    bookmark={bookmark}
+                    handleCloseClick={handleCloseClick}
+                    handleCardClick={handleCreateCardClick}
+                    cards={cards}
+                  />
                 </CardSection>
               </CardSectionWrapper>
             </Route>
@@ -117,6 +148,7 @@ function App() {
               <YousCards>
                 <CardSection>
                   <RenderCards
+                    levelStyle={levelStyle}
                     close={close}
                     handleCloseClick={handleCloseClick}
                     handleCardClick={handleCreateCardClick}
@@ -124,6 +156,9 @@ function App() {
                   />
                 </CardSection>
                 <Create
+                  level={level}
+                  setLevel={setLevel}
+                  levelStyle={levelStyle}
                   cards={cards}
                   setCards={setCards}
                   schoolOption={schoolOption}

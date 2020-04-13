@@ -4,8 +4,6 @@ import Card from '../components/Card'
 import Filter from '../components/Filter'
 import arrow from '../images/close.svg'
 import uuid from 'react-uuid'
-import close from '../images/close.svg'
-import bookmark from '../images/bookmark.svg'
 
 export default function Create({
   schoolOption,
@@ -16,6 +14,9 @@ export default function Create({
   subjectsTitle,
   cards,
   setCards,
+  levelStyle,
+  level,
+  setLevel,
 }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -26,20 +27,18 @@ export default function Create({
   const [color, setColor] = useState('white')
   const [isBookmarked, setIsBookmarked] = useState(true)
   const [upload, setUpload] = useState([])
-  const [schoolrequired, setSchoolRequired] = useState('')
-  const [classRequired, setClassRequired] = useState('')
-  const [subjectsRequired, setSubjectsRequired] = useState('')
 
   const sportColor = 'linear-gradient(to right, #1697be, #84d9f3)'
   const mathColor = 'linear-gradient(to right , #a10808, #f34c36 )'
   const germanColor = 'linear-gradient(to right,#073ead, #53aff5)'
-  const artColor = 'linear-gradient(to right, #1e9fb3 ,#6a07a3, #a3078e, #f7f42a)'
+  const artColor =
+    'linear-gradient(to right, #1e9fb3 ,#6a07a3, #a3078e, #f7f42a)'
   const musicColor = 'linear-gradient(to right, #ee7600,#f8ea6d)'
   const religionColor = 'linear-gradient(to right,#360666, #b907eb)'
   const bioColor = 'linear-gradient(to right,darkgreen, #00bf43)'
   const englishColor = 'linear-gradient(to right,#026fb8, #04c96d)'
   const theaterColor = 'linear-gradient(to right,#84d9f3, #1697be)'
-  const medienColor=  'linear-gradient(to right,#b9f728, #fc1287)'
+  const medienColor = 'linear-gradient(to right,#b9f728, #fc1287)'
 
   const required = 'required'
   const authorId = uuid()
@@ -54,7 +53,7 @@ export default function Create({
         setColor(musicColor)
       } else if (selectedSubject.label === 'Deutsch') {
         setColor(germanColor)
-      }  else if (selectedSubject.label === 'Kunst') {
+      } else if (selectedSubject.label === 'Kunst') {
         setColor(artColor)
       } else if (selectedSubject.label === 'Theater') {
         setColor(theaterColor)
@@ -64,7 +63,7 @@ export default function Create({
         setColor(bioColor)
       } else if (selectedSubject.label === 'Medien') {
         setColor(medienColor)
-      }else setColor(religionColor)
+      } else setColor(religionColor)
     }
   }, [createSubjectsValue])
 
@@ -81,23 +80,26 @@ export default function Create({
   console.log('Cards', cards)
   function handleSubmit(event) {
     event.preventDefault()
-    if(createSchoolValue &&  createClassValue  && createSubjectsValue){ setCards([
-      ...cards,
-      {
-        id: uuid(),
-        title: title,
-        description: description,
-        author: author,
-        authorId: authorId,
-        bookmarked: false,
-        upload: upload,
-        school: createSchoolValue.value.label,
-        classroom: createClassValue.value.label,
-        subject: createSubjectsValue.value.label,
-        color: color,
-      },
-    ]) 
-  } 
+    if (createSchoolValue && createClassValue && createSubjectsValue) {
+      setCards([
+        ...cards,
+        {
+          id: uuid(),
+          title: title,
+          description: description,
+          author: author,
+          authorId: authorId,
+          bookmarked: false,
+          upload: upload,
+          school: createSchoolValue.value.label,
+          classroom: createClassValue.value.label,
+          subject: createSubjectsValue.value.label,
+          color: color,
+          level: level,
+          levelStyle: levelStyle,
+        },
+      ]) && setLevel('')
+    }
   }
 
   function handleUpload(event) {
@@ -108,12 +110,17 @@ export default function Create({
   function onUploadClick() {
     console.log('Button Klicked')
   }
-
+  function onRadioChange(event) {
+    console.log('RadioButton Name', event.target.value)
+    setLevel && setLevel(event.target.value)
+  }
+  console.log('style', levelStyle)
   return (
     <CreateSection>
       <StyledHeading>Erstelle eine neue Lernkarte</StyledHeading>
       <CardPreview>
         <Card
+          levelStyle={levelStyle}
           title={title}
           description={description}
           author={author}
@@ -140,10 +147,10 @@ export default function Create({
           </StyledLabel>
           <StyledLabel>
             <StyledH3> Kurzbeschreibung:</StyledH3>
-              
+
             <StyledInput
-            required
-            name="description"
+              required
+              name="description"
               value={description}
               maxLength="20"
               type="textarea"
@@ -154,9 +161,8 @@ export default function Create({
           <StyledLabel>
             <StyledH3>Autor:</StyledH3>
             <StyledInput
-                  name="author"
-            required
-            value={author}
+              required
+              value={author}
               maxLength="32"
               onChange={handleAuthorChange}
               name="author"
@@ -171,7 +177,7 @@ export default function Create({
             title={schoolName}
             setValue={setCreateSchoolValue}
           />
-      
+
           <Filter
             required={required}
             value={createClassValue}
@@ -186,7 +192,8 @@ export default function Create({
             title={subjectsTitle}
             setValue={setCreateSubjectsValue}
           />
-          <div>
+
+          {/* <div>
             <label style={{ margin: '8px 20px' }}>
               <StyledH3> Dateiupload:</StyledH3>
               <StyledInputUpload
@@ -200,8 +207,49 @@ export default function Create({
             <button type="button" onClick={onUploadClick}>
               Upload
             </button>
+          </div> */}
+
+          <StyledFooter> Lern-Level:</StyledFooter>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              borderRadius: 12,
+              border: '2px solid lightgrey',
+            }}
+          >
+            <input
+              type="radio"
+              id="better"
+              name="level"
+              value="better"
+              onChange={onRadioChange}
+            ></input>
+            <label htmlFor="better">
+              <p>Fortgeschritten</p>
+            </label>
+            <input
+              type="radio"
+              id="normal"
+              name="level"
+              value="normal"
+              onChange={onRadioChange}
+            ></input>
+            <label htmlFor="normal">
+              <p>Normal</p>
+            </label>
+            <input
+              type="radio"
+              id="low"
+              name="level"
+              value="low"
+              onChange={onRadioChange}
+            ></input>
+            <label htmlFor="low">
+              <p>Fördern</p>
+            </label>
           </div>
-          <StyledSubmitButton type="submit" >Speichern</StyledSubmitButton>
+          <StyledSubmitButton type="submit">Speichern</StyledSubmitButton>
         </StyledForm>
       </CardPreview>
     </CreateSection>
@@ -252,6 +300,10 @@ const StyledH2 = styled.h3`
 `
 const StyledH3 = styled.h3`
   margin: 0 0 10px 0;
+`
+const StyledFooter = styled.h3`
+  margin: 20px 0;
+  color: orange;
 `
 const StyledInput = styled.input`
   box-sizing: border-box;

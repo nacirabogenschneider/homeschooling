@@ -14,6 +14,7 @@ export default function Card({
   handleCloseClick,
   close,
   bookmark,
+  levelStyle,
 }) {
   const [fav, setFav] = useState(true)
   const bookmarking = () => {
@@ -38,9 +39,9 @@ export default function Card({
         <TextFieldAuthor>{author}</TextFieldAuthor>
       </StyledRows>
       <ButtonWrapper>
-        <StyledButton></StyledButton>
-        <StyledButton></StyledButton>
-        <StyledButton></StyledButton>
+        <StyledButton style={levelStyle[0].styleLevelBetter}></StyledButton>
+        <StyledButton style={levelStyle[1].styleLevelNormal}></StyledButton>
+        <StyledButton style={levelStyle[2].styleLevelLow}></StyledButton>
       </ButtonWrapper>
     </CardBox>
   )
@@ -85,7 +86,6 @@ const ImgClose = styled.img`
 const StyledButton = styled.div`
   border: none;
   margin: 0 4px;
-  box-shadow: 0 0 6px 2px #cfcfcf;
   border-radius: 50%;
   background: white;
   height: 20px;

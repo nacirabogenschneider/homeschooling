@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import Card from './Card'
 
@@ -7,10 +7,12 @@ export default function RenderCard({
   handleCardClick,
   handleCloseClick,
   close,
+  bookmark,
 }) {
   console.log('RENDERCARDS', cards)
   return cards.map((card) => (
     <Card
+      bookmark={bookmark}
       close={close}
       handleCloseClick={handleCloseClick}
       handleCardClick={handleCardClick}
@@ -22,6 +24,7 @@ export default function RenderCard({
       color={card.color}
       isBookmarked={card.isBookmarked}
       setIsBookmarked={card.setIsBookmarked}
+      levelStyle={card.levelStyle}
     />
   ))
 }

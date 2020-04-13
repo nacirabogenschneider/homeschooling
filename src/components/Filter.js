@@ -2,17 +2,16 @@ import React from 'react'
 import Select from 'react-select'
 import styled from 'styled-components'
 
-export default function Filter({ options, title, setValue , required}) {
+export default function Filter({ options, title, setValue, required }) {
   return (
     <FilterWrapper>
       <H3>{title}</H3>
       <StyledSelect
-        required
+        required={required}
         placeholder="auswählen..."
         options={options}
         onChange={(value) => setValue({ value })}
         isSearchable
-    
       />
     </FilterWrapper>
   )
