@@ -4,6 +4,8 @@ import Card from '../components/Card'
 import Filter from '../components/Filter'
 import arrow from '../images/close.svg'
 import uuid from 'react-uuid'
+import { firestore } from '../firebase'
+import { collectIdsAndDocs } from '../utilities'
 
 export default function Create({
   schoolOption,
@@ -78,27 +80,27 @@ export default function Create({
     setAuthor(event.target.value)
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
     if (createSchoolValue && createClassValue && createSubjectsValue) {
-      setCards([
-        ...cards,
-        {
-          id: uuid(),
-          title: title,
-          description: description,
-          author: author,
-          authorId: authorId,
-          bookmarked: false,
-          upload: upload,
-          school: createSchoolValue.value.label,
-          classroom: createClassValue.value.label,
-          subject: createSubjectsValue.value.label,
-          color: color,
-          level: level,
-          levelStyle: levelStyle,
-        },
-      ]) && setLevel('')
+      const card = {
+        title: title,
+        description: description,
+        author: author,
+        authorId: authorId,
+        bookmarked: false,
+        upload: upload,
+        school: createSchoolValue.value.label,
+        classroom: createClassValue.value.label,
+        subject: createSubjectsValue.value.label,
+        color: color,
+        level: level,
+        levelStyle: levelStyle,
+      }
+      const docRef = await firestore.collection('cards').add(card)
+      const dbCard = await docRef.get()
+      const newCard = collectIdsAndDocs(dbCard)
+      setCards([...cards, newCard]) && setLevel('')
     }
   }
 

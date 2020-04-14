@@ -24,7 +24,11 @@ export default function Card({
 
   return (
     <CardBox style={{ background: color }} id={id} onClick={handleCardClick}>
-      <ImgClose src={close} id={id} onClick={handleCloseClick}></ImgClose>
+      <ImgClose
+        src={close}
+        id={id}
+        onClick={() => handleCloseClick(id)}
+      ></ImgClose>
       <Image src={fav ? bookmark : pink} onClick={bookmarking}></Image>
       <Preview></Preview>
       <StyledRows>

@@ -15,7 +15,7 @@ import Filter from './components/Filter'
 import close from './images/close.svg'
 import bookmark from './images/bookmark.svg'
 import { firestore } from './firebase'
-
+import { collectIdsAndDocs } from './utilities.js'
 function App() {
   const hamburgSchool = hamburg.hamburg
   const schoolName = 'Schulauswahl'
@@ -25,6 +25,7 @@ function App() {
   const [classesValue, setClassesValue] = useState({})
   const [subjectsValue, setSubjectsValue] = useState({})
   const [schoolValue, setSchoolvalue] = useState({})
+
   const [cards, setCards] = useState([])
   const [levelStyle, setLevelStyle] = useState([
     { styleLevelBetter: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
@@ -33,15 +34,15 @@ function App() {
   ])
   const [level, setLevel] = useState('')
 
-  async function getCards() {
+  async function getCardsFromDatabase() {
     const snapshot = await firestore.collection('cards').get()
-    snapshot.forEach((doc) => {
-      const id = doc.id
-      const data = doc.data()
-      console.log({ id, data })
-    })
+    const dbCards = snapshot.docs.map(collectIdsAndDocs)
+    setCards(dbCards)
   }
-  getCards()
+  useEffect(() => {
+    getCardsFromDatabase()
+  }, [])
+
   useEffect(() => {
     if (level === 'better') {
       setLevelStyle([
@@ -98,10 +99,13 @@ function App() {
     const foundCard = cards.find((card) => card.id === event.target.id)
   }
 
-  function handleCloseClick(event) {
-    const newCardArray = cards.filter((card) => card.id !== event.target.id)
+  async function handleCloseClick(id) {
+    const newCardArray = cards.filter((card) => card.id !== id)
+    await firestore.doc(`cards/${id}`).delete()
+
     setCards(newCardArray)
   }
+
   return (
     <Router>
       <AppGrid>
