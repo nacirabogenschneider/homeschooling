@@ -35,9 +35,14 @@ function App() {
   const [level, setLevel] = useState('')
 
   async function getCardsFromDatabase() {
-    const snapshot = await firestore.collection('cards').get()
-    const dbCards = snapshot.docs.map(collectIdsAndDocs)
-    setCards(dbCards)
+    firestore.collection('cards').onSnapshot((snapshot) => {
+      const dbCards = snapshot.docs.map(collectIdsAndDocs)
+      setCards(dbCards)
+    })
+
+    // const snapshot = await firestore.collection('cards').get()
+    // const dbCards = snapshot.docs.map(collectIdsAndDocs)
+    // setCards(dbCards)
   }
   useEffect(() => {
     getCardsFromDatabase()
@@ -100,10 +105,9 @@ function App() {
   }
 
   async function handleCloseClick(id) {
-    const newCardArray = cards.filter((card) => card.id !== id)
+    // const newCardArray = cards.filter((card) => card.id !== id)
     await firestore.doc(`cards/${id}`).delete()
-
-    setCards(newCardArray)
+    // setCards(newCardArray)
   }
 
   return (

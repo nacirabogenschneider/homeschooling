@@ -98,9 +98,9 @@ export default function Create({
         levelStyle: levelStyle,
       }
       const docRef = await firestore.collection('cards').add(card)
-      const dbCard = await docRef.get()
-      const newCard = collectIdsAndDocs(dbCard)
-      setCards([...cards, newCard]) && setLevel('')
+      // const dbCard = await docRef.get()
+      // const newCard = collectIdsAndDocs(dbCard)
+      // setCards([...cards, newCard]) && setLevel('')
     }
   }
 
