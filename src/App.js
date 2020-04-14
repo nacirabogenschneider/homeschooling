@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import Card from './components/Card'
 import * as hamburg from './data/hamburg.json'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -15,7 +14,7 @@ import RenderCards from './components/RenderCards'
 import Filter from './components/Filter'
 import close from './images/close.svg'
 import bookmark from './images/bookmark.svg'
-import RenderCard from './components/RenderCards'
+import { firestore } from './firebase'
 
 function App() {
   const hamburgSchool = hamburg.hamburg
@@ -34,6 +33,15 @@ function App() {
   ])
   const [level, setLevel] = useState('')
 
+  async function getCards() {
+    const snapshot = await firestore.collection('cards').get()
+    snapshot.forEach((doc) => {
+      const id = doc.id
+      const data = doc.data()
+      console.log({ id, data })
+    })
+  }
+  getCards()
   useEffect(() => {
     if (level === 'better') {
       setLevelStyle([
@@ -87,7 +95,6 @@ function App() {
   ]
 
   function handleCreateCardClick(event) {
-    console.log('Kann bearbeitet werden', event.target.id)
     const foundCard = cards.find((card) => card.id === event.target.id)
   }
 

@@ -77,7 +77,7 @@ export default function Create({
   function handleAuthorChange(event) {
     setAuthor(event.target.value)
   }
-  console.log('Cards', cards)
+
   function handleSubmit(event) {
     event.preventDefault()
     if (createSchoolValue && createClassValue && createSubjectsValue) {
@@ -103,18 +103,14 @@ export default function Create({
   }
 
   function handleUpload(event) {
-    console.log('Es wird was hochgeladen: ', event.target.files[0])
     setUpload([...upload, { selecteFile: event.target.files[0], loaded: 0 }])
   }
 
-  function onUploadClick() {
-    console.log('Button Klicked')
-  }
+  function onUploadClick() {}
   function onRadioChange(event) {
-    console.log('RadioButton Name', event.target.value)
     setLevel && setLevel(event.target.value)
   }
-  console.log('style', levelStyle)
+
   return (
     <CreateSection>
       <StyledHeading>Erstelle eine neue Lernkarte</StyledHeading>

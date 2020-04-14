@@ -9,7 +9,6 @@ export default function RenderCard({
   close,
   bookmark,
 }) {
-  console.log('RENDERCARDS', cards)
   return cards.map((card) => (
     <Card
       bookmark={bookmark}

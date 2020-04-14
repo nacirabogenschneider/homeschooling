@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import pink from '../images/pink.svg'
 
@@ -19,10 +19,8 @@ export default function Card({
   const [fav, setFav] = useState(true)
   const bookmarking = () => {
     setFav(!fav)
-  }
-  useEffect(() => {
     setIsBookmarked && setIsBookmarked(!isBookmarked)
-  }, [fav])
+  }
 
   return (
     <CardBox style={{ background: color }} id={id} onClick={handleCardClick}>
