@@ -1,35 +1,31 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import pink from '../images/pink.svg'
+import { firestore } from '../firebase'
 
 export default function Card({
   title,
   description,
   author,
   color,
-  setIsBookmarked,
   isBookmarked,
   id,
   handleCardClick,
-  handleCloseClick,
   close,
-  bookmark,
+  bookmarkImage,
   levelStyle,
 }) {
-  const [fav, setFav] = useState(true)
-  const bookmarking = () => {
-    setFav(!fav)
-    setIsBookmarked && setIsBookmarked(!isBookmarked)
-  }
+  const cardRef = firestore.doc(`cards/${id}`)
+  const remove = () => cardRef.delete()
+  const update = () => cardRef.update({ isBookmarked: !isBookmarked })
 
   return (
     <CardBox style={{ background: color }} id={id} onClick={handleCardClick}>
-      <ImgClose
-        src={close}
-        id={id}
-        onClick={() => handleCloseClick(id)}
-      ></ImgClose>
-      <Image src={fav ? bookmark : pink} onClick={bookmarking}></Image>
+      <ImgClose src={close} id={id} onClick={remove}></ImgClose>
+      <Image
+        src={!isBookmarked ? bookmarkImage : pink}
+        onClick={update}
+      ></Image>
       <Preview></Preview>
       <StyledRows>
         <TextFieldH5>{title}</TextFieldH5>

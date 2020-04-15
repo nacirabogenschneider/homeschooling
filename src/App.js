@@ -13,7 +13,7 @@ import Navigation from './components/Navigation'
 import RenderCards from './components/RenderCards'
 import Filter from './components/Filter'
 import close from './images/close.svg'
-import bookmark from './images/bookmark.svg'
+import bookmarkImage from './images/bookmark.svg'
 import { firestore } from './firebase'
 import { collectIdsAndDocs } from './utilities.js'
 function App() {
@@ -39,10 +39,6 @@ function App() {
       const dbCards = snapshot.docs.map(collectIdsAndDocs)
       setCards(dbCards)
     })
-
-    // const snapshot = await firestore.collection('cards').get()
-    // const dbCards = snapshot.docs.map(collectIdsAndDocs)
-    // setCards(dbCards)
   }
   useEffect(() => {
     getCardsFromDatabase()
@@ -105,9 +101,7 @@ function App() {
   }
 
   async function handleCloseClick(id) {
-    // const newCardArray = cards.filter((card) => card.id !== id)
     await firestore.doc(`cards/${id}`).delete()
-    // setCards(newCardArray)
   }
 
   return (
@@ -149,8 +143,7 @@ function App() {
                 <CardSection>
                   <RenderCards
                     levelStyle={levelStyle}
-                    bookmark={bookmark}
-                    handleCloseClick={handleCloseClick}
+                    bookmarkImage={bookmarkImage}
                     handleCardClick={handleCreateCardClick}
                     cards={cards}
                   />
@@ -165,7 +158,6 @@ function App() {
                   <RenderCards
                     levelStyle={levelStyle}
                     close={close}
-                    handleCloseClick={handleCloseClick}
                     handleCardClick={handleCreateCardClick}
                     cards={cards}
                   />

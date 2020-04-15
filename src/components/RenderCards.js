@@ -7,11 +7,11 @@ export default function RenderCard({
   handleCardClick,
   handleCloseClick,
   close,
-  bookmark,
+  bookmarkImage,
 }) {
   return cards.map((card) => (
     <Card
-      bookmark={bookmark}
+      bookmarkImage={bookmarkImage}
       close={close}
       handleCloseClick={handleCloseClick}
       handleCardClick={handleCardClick}
@@ -22,7 +22,6 @@ export default function RenderCard({
       author={card.author}
       color={card.color}
       isBookmarked={card.isBookmarked}
-      setIsBookmarked={card.setIsBookmarked}
       levelStyle={card.levelStyle}
     />
   ))

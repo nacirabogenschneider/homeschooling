@@ -27,7 +27,7 @@ export default function Create({
   const [createClassValue, setCreateClassValue] = useState()
   const [createSubjectsValue, setCreateSubjectsValue] = useState()
   const [color, setColor] = useState('white')
-  const [isBookmarked, setIsBookmarked] = useState(true)
+  const isBookmarked = false
   const [upload, setUpload] = useState([])
 
   const sportColor = 'linear-gradient(to right, #1697be, #84d9f3)'
@@ -88,7 +88,6 @@ export default function Create({
         description: description,
         author: author,
         authorId: authorId,
-        bookmarked: false,
         upload: upload,
         school: createSchoolValue.value.label,
         classroom: createClassValue.value.label,
@@ -96,8 +95,10 @@ export default function Create({
         color: color,
         level: level,
         levelStyle: levelStyle,
+        isBookmarked: isBookmarked,
       }
-      const docRef = await firestore.collection('cards').add(card)
+      await firestore.collection('cards').add(card)
+      // const docRef = await firestore.collection('cards').add(card)
       // const dbCard = await docRef.get()
       // const newCard = collectIdsAndDocs(dbCard)
       // setCards([...cards, newCard]) && setLevel('')
@@ -123,8 +124,6 @@ export default function Create({
           description={description}
           author={author}
           color={color}
-          isBookmarked={isBookmarked}
-          setIsBookmarked={setIsBookmarked}
         />
         <StyledForm onSubmit={handleSubmit}>
           <H2Wrapper>
