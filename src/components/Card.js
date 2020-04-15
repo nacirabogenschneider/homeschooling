@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import pink from '../images/pink.svg'
 import { firestore } from '../firebase'
@@ -21,11 +21,13 @@ export default function Card({
 
   return (
     <CardBox style={{ background: color }} id={id} onClick={handleCardClick}>
-      <ImgClose src={close} id={id} onClick={remove}></ImgClose>
-      <Image
-        src={!isBookmarked ? bookmarkImage : pink}
-        onClick={update}
-      ></Image>
+      <ImgWrapper>
+        <ImgClose src={close} id={id} onClick={remove}></ImgClose>
+        <ImgBookmark
+          src={!isBookmarked ? bookmarkImage : pink}
+          onClick={update}
+        ></ImgBookmark>
+      </ImgWrapper>
       <Preview></Preview>
       <StyledRows>
         <TextFieldH5>{title}</TextFieldH5>
@@ -68,18 +70,19 @@ const StyledRows = styled.div`
   margin: 4px 8px;
   box-shadow: inset 0 0 6px 2px #cfcfcf;
 `
-const Image = styled.img`
+const ImgWrapper = styled.div`
+  width: 220px;
+  display: flex;
+  justify-content: space-between;
+`
+const ImgBookmark = styled.img`
   height: 40px;
-  position: relative;
-  left: 170px;
-  top: -5px;
+  margin: -5px 2px 0 0;
   text-shadow: 0 0 6px 2px green;
 `
 const ImgClose = styled.img`
-  position: relative;
   height: 26px;
-  top: -5px;
-  left: 4px;
+  padding: 5px;
 `
 const StyledButton = styled.div`
   border: none;

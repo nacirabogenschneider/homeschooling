@@ -5,7 +5,6 @@ import Card from './Card'
 export default function RenderCard({
   cards,
   handleCardClick,
-  handleCloseClick,
   close,
   bookmarkImage,
 }) {
@@ -13,7 +12,6 @@ export default function RenderCard({
     <Card
       bookmarkImage={bookmarkImage}
       close={close}
-      handleCloseClick={handleCloseClick}
       handleCardClick={handleCardClick}
       key={card.id}
       id={card.id}

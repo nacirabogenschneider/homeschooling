@@ -154,15 +154,8 @@ function App() {
           <Switch>
             <Route path="/create">
               <YousCards>
-                <CardSection>
-                  <RenderCards
-                    levelStyle={levelStyle}
-                    close={close}
-                    handleCardClick={handleCreateCardClick}
-                    cards={cards}
-                  />
-                </CardSection>
                 <Create
+                  handleCreateCardClick={handleCreateCardClick}
                   level={level}
                   setLevel={setLevel}
                   levelStyle={levelStyle}
@@ -213,10 +206,13 @@ function App() {
 
 export default App
 const YousCards = styled.div`
-  margin-top: 40px;
+  margin: 40px 24px;
   width: 100vw;
   display: flex;
   flex-direction: column;
+  @media (max-width: 420px) {
+    margin: 40px 0;
+  }
 `
 const AppGrid = styled.section`
   display: grid;

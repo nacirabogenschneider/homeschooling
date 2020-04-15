@@ -6,6 +6,8 @@ import arrow from '../images/close.svg'
 import uuid from 'react-uuid'
 import { firestore } from '../firebase'
 import { collectIdsAndDocs } from '../utilities'
+import close from '../images/close.svg'
+import RenderCards from '../components/RenderCards'
 
 export default function Create({
   schoolOption,
@@ -19,6 +21,7 @@ export default function Create({
   levelStyle,
   level,
   setLevel,
+  handleCreateCardClick,
 }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -88,7 +91,6 @@ export default function Create({
         description: description,
         author: author,
         authorId: authorId,
-        upload: upload,
         school: createSchoolValue.value.label,
         classroom: createClassValue.value.label,
         subject: createSubjectsValue.value.label,
@@ -98,24 +100,26 @@ export default function Create({
         isBookmarked: isBookmarked,
       }
       await firestore.collection('cards').add(card)
-      // const docRef = await firestore.collection('cards').add(card)
-      // const dbCard = await docRef.get()
-      // const newCard = collectIdsAndDocs(dbCard)
-      // setCards([...cards, newCard]) && setLevel('')
     }
   }
 
-  function handleUpload(event) {
-    setUpload([...upload, { selecteFile: event.target.files[0], loaded: 0 }])
-  }
-
-  function onUploadClick() {}
   function onRadioChange(event) {
     setLevel && setLevel(event.target.value)
   }
 
   return (
     <CreateSection>
+      <StyledHeading>Deine Basis-Karten</StyledHeading>
+      <CardSection>
+        <RenderCards
+          levelStyle={levelStyle}
+          close={close}
+          handleCardClick={handleCreateCardClick}
+          cards={cards}
+        />
+      </CardSection>
+      <StyledHeading>Deine Detail-Karten</StyledHeading>
+
       <StyledHeading>Erstelle eine neue Lernkarte</StyledHeading>
       <CardPreview>
         <Card
@@ -207,45 +211,44 @@ export default function Create({
           </div> */}
 
           <StyledFooter> Lern-Level:</StyledFooter>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              borderRadius: 12,
-              border: '2px solid lightgrey',
-            }}
-          >
-            <input
-              type="radio"
-              id="better"
-              name="level"
-              value="better"
-              onChange={onRadioChange}
-            ></input>
-            <label htmlFor="better">
-              <p>Fortgeschritten</p>
-            </label>
-            <input
-              type="radio"
-              id="normal"
-              name="level"
-              value="normal"
-              onChange={onRadioChange}
-            ></input>
-            <label htmlFor="normal">
-              <p>Normal</p>
-            </label>
-            <input
-              type="radio"
-              id="low"
-              name="level"
-              value="low"
-              onChange={onRadioChange}
-            ></input>
-            <label htmlFor="low">
-              <p>Fördern</p>
-            </label>
-          </div>
+          <RadioGroup>
+            <div style={{ display: 'flex' }}>
+              <input
+                type="radio"
+                id="better"
+                name="level"
+                value="better"
+                onChange={onRadioChange}
+              ></input>
+              <label htmlFor="better">
+                <p style={{ marginLeft: 6 }}>Fortgeschritten</p>
+              </label>
+            </div>
+            <div style={{ display: 'flex' }}>
+              <input
+                type="radio"
+                id="normal"
+                name="level"
+                value="normal"
+                onChange={onRadioChange}
+              ></input>
+              <label htmlFor="normal">
+                <p style={{ marginLeft: 6 }}>Normal</p>
+              </label>
+            </div>
+            <div style={{ display: 'flex' }}>
+              <input
+                type="radio"
+                id="low"
+                name="level"
+                value="low"
+                onChange={onRadioChange}
+              ></input>
+              <label htmlFor="low">
+                <p style={{ marginLeft: 6 }}>Fördern</p>
+              </label>
+            </div>
+          </RadioGroup>
           <StyledSubmitButton type="submit">Speichern</StyledSubmitButton>
         </StyledForm>
       </CardPreview>
@@ -346,5 +349,27 @@ const StyledSubmitButton = styled.button`
   }
   &:focus {
     box-shadow: 0 0 10px 2px orange;
+  }
+`
+const CardSection = styled.header`
+  display: flex;
+  width: 100vw;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  background: transparent;
+  @media (max-width: 768px) {
+    margin: 0 0 50px 0;
+    justify-content: center;
+  }
+`
+const RadioGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border-radius: 12px;
+  border: 2px solid lightgrey;
+  @media (max-width: 400px) {
+    flex-direction: column;
+    padding: 6px;
   }
 `
