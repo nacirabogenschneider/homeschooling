@@ -3,6 +3,12 @@ import Select from 'react-select'
 import styled from 'styled-components'
 
 export default function Filter({ options, title, setValue, required }) {
+  function onHandleOnChange(value) {
+    const labelValue = value.label
+    console.log('Im Filter', labelValue)
+    setValue(labelValue)
+  }
+
   return (
     <FilterWrapper>
       <H3>{title}</H3>
@@ -10,7 +16,7 @@ export default function Filter({ options, title, setValue, required }) {
         required={required}
         placeholder="auswählen..."
         options={options}
-        onChange={(value) => setValue({ value })}
+        onChange={(value) => onHandleOnChange(value)}
         isSearchable
       />
     </FilterWrapper>

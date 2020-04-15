@@ -12,19 +12,19 @@ import Classroom from './pages/Classroom'
 import Navigation from './components/Navigation'
 import RenderCards from './components/RenderCards'
 import Filter from './components/Filter'
-import close from './images/close.svg'
 import bookmarkImage from './images/bookmark.svg'
 import { firestore } from './firebase'
 import { collectIdsAndDocs } from './utilities.js'
+import StateManager from 'react-select'
 function App() {
   const hamburgSchool = hamburg.hamburg
   const schoolName = 'Schulauswahl'
   const classesTitle = 'Jahrgangsfilter'
   const subjectsTitle = 'Fächerauswahl'
   const [schoolOption, setSchoolOption] = useState([])
-  const [classesValue, setClassesValue] = useState({})
-  const [subjectsValue, setSubjectsValue] = useState({})
-  const [schoolValue, setSchoolvalue] = useState({})
+  const [classesValue, setClassesValue] = useState()
+  const [subjectsValue, setSubjectsValue] = useState()
+  const [schoolValue, setSchoolvalue] = useState()
 
   const [cards, setCards] = useState([])
   const [levelStyle, setLevelStyle] = useState([
@@ -33,11 +33,13 @@ function App() {
     { styleLevelLow: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
   ])
   const [level, setLevel] = useState('')
-
+  const [filteredCards, setFilteredCards] = useState(cards)
+  console.log('FilteredCards', filteredCards)
   async function getCardsFromDatabase() {
     firestore.collection('cards').onSnapshot((snapshot) => {
       const dbCards = snapshot.docs.map(collectIdsAndDocs)
       setCards(dbCards)
+      setFilteredCards(dbCards)
     })
   }
   useEffect(() => {
@@ -100,10 +102,17 @@ function App() {
     const foundCard = cards.find((card) => card.id === event.target.id)
   }
 
-  async function handleCloseClick(id) {
-    await firestore.doc(`cards/${id}`).delete()
+  function filterCards() {
+    if (schoolValue) {
+      const filterCards = cards.filter((card) => card.school === schoolValue)
+      console.log('IF ANWEISUNG - filterCards', filterCards)
+      setFilteredCards(filterCards)
+    }
   }
 
+  useEffect(() => {
+    filterCards()
+  }, [schoolValue])
   return (
     <Router>
       <AppGrid>
@@ -145,7 +154,7 @@ function App() {
                     levelStyle={levelStyle}
                     bookmarkImage={bookmarkImage}
                     handleCardClick={handleCreateCardClick}
-                    cards={cards}
+                    cards={filteredCards}
                   />
                 </CardSection>
               </CardSectionWrapper>
