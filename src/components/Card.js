@@ -14,15 +14,20 @@ export default function Card({
   close,
   bookmarkImage,
   levelStyle,
+  cards,
 }) {
   const [cardDetailsVisible, setCardDetailsVisible] = useState(false)
   const cardRef = firestore.doc(`cards/${id}`)
   const remove = () => cardRef.delete()
   const update = () => cardRef.update({ isBookmarked: !isBookmarked })
+  const [selectedCardbyClick, setSelectedCardbyClick] = useState({})
 
-  function handleCardClick() {
+  async function handleCardClick(id) {
+    console.log('event.target.value', id)
+    const selectedCard = await cards.find((card) => card.id === id)
+    setSelectedCardbyClick(selectedCard)
     setCardDetailsVisible(true)
-    console.log('KLICK')
+    console.log('KLICK', selectedCard)
   }
   return (
     <CardBox style={{ background: color }} id={id}>
@@ -33,7 +38,7 @@ export default function Card({
           onClick={update}
         ></ImgBookmark>
       </ImgWrapper>
-      <div onClick={handleCardClick}>
+      <div id={id} onClick={() => handleCardClick(id)}>
         <Preview></Preview>
         <StyledRows>
           <TextFieldH5>{title}</TextFieldH5>
@@ -53,7 +58,10 @@ export default function Card({
       <div
         style={cardDetailsVisible ? { display: 'flex' } : { display: 'none' }}
       >
-        <CardDetails setCardDetailsVisible={setCardDetailsVisible} />
+        <CardDetails
+          setCardDetailsVisible={setCardDetailsVisible}
+          selectedCardbyClick={selectedCardbyClick}
+        />
       </div>
     </CardBox>
   )

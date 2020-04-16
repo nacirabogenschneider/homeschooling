@@ -21,6 +21,7 @@ export default function RenderCard({
       color={card.color}
       isBookmarked={card.isBookmarked}
       levelStyle={card.levelStyle}
+      cards={cards}
     />
   ))
 }

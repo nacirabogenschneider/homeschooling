@@ -127,6 +127,7 @@ export default function Create({
           description={description}
           author={author}
           color={color}
+          cards={cards}
         />
         <StyledForm onSubmit={handleSubmit}>
           <H2Wrapper>
