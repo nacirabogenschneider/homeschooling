@@ -5,7 +5,6 @@ import Filter from '../components/Filter'
 import arrow from '../images/close.svg'
 import uuid from 'react-uuid'
 import { firestore } from '../firebase'
-import { collectIdsAndDocs } from '../utilities'
 import close from '../images/close.svg'
 import RenderCards from '../components/RenderCards'
 

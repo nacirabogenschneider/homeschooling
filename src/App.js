@@ -15,7 +15,7 @@ import Filter from './components/Filter'
 import bookmarkImage from './images/bookmark.svg'
 import { firestore } from './firebase'
 import { collectIdsAndDocs } from './utilities.js'
-import StateManager from 'react-select'
+
 function App() {
   const hamburgSchool = hamburg.hamburg
   const schoolName = 'Schulauswahl'
@@ -25,7 +25,6 @@ function App() {
   const [classesValue, setClassesValue] = useState()
   const [subjectsValue, setSubjectsValue] = useState()
   const [schoolValue, setSchoolvalue] = useState()
-
   const [cards, setCards] = useState([])
   const [levelStyle, setLevelStyle] = useState([
     { styleLevelBetter: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
@@ -34,7 +33,7 @@ function App() {
   ])
   const [level, setLevel] = useState('')
   const [filteredCards, setFilteredCards] = useState(cards)
-  console.log('FilteredCards', filteredCards)
+
   async function getCardsFromDatabase() {
     firestore.collection('cards').onSnapshot((snapshot) => {
       const dbCards = snapshot.docs.map(collectIdsAndDocs)
@@ -98,21 +97,58 @@ function App() {
     { value: 'Theater', label: 'Theater' },
   ]
 
-  function handleCreateCardClick(event) {
-    const foundCard = cards.find((card) => card.id === event.target.id)
+  async function filterCards() {
+    let cardsToFilter
+    schoolValue || classesValue || subjectsValue
+      ? (cardsToFilter = filteredCards)
+      : (cardsToFilter = cards)
+
+    console.log('Im Schulfilter')
+    console.log('CARDSTOFILTER', cardsToFilter)
+    console.log('schoolValue', schoolValue)
+    console.log('classesValue', classesValue)
+    console.log('SubjectValue', subjectsValue)
+
+    const filterCardsBySchool = await cardsToFilter.filter(
+      (card) => card.school === schoolValue
+    )
+    setFilteredCards(filterCardsBySchool)
   }
 
-  function filterCards() {
-    if (schoolValue) {
-      const filterCards = cards.filter((card) => card.school === schoolValue)
-      console.log('IF ANWEISUNG - filterCards', filterCards)
-      setFilteredCards(filterCards)
-    }
+  async function classFilter() {
+    let cardsToFilter
+    schoolValue || classesValue || subjectsValue
+      ? (cardsToFilter = filteredCards)
+      : (cardsToFilter = cards)
+    const filterCardsByClass = await cardsToFilter.filter(
+      (card) => card.classroom === classesValue
+    )
+    setFilteredCards(filterCardsByClass)
+  }
+
+  async function subjecsFilter() {
+    let cardsToFilter
+    schoolValue || classesValue || subjectsValue
+      ? (cardsToFilter = filteredCards)
+      : (cardsToFilter = cards)
+    const filterCardsBySubject = await cardsToFilter.filter(
+      (card) => card.subject === subjectsValue
+    )
+    setFilteredCards(filterCardsBySubject)
   }
 
   useEffect(() => {
     filterCards()
   }, [schoolValue])
+
+  useEffect(() => {
+    subjecsFilter()
+  }, [subjectsValue])
+
+  useEffect(() => {
+    classFilter()
+  }, [classesValue])
+
   return (
     <Router>
       <AppGrid>
@@ -153,7 +189,6 @@ function App() {
                   <RenderCards
                     levelStyle={levelStyle}
                     bookmarkImage={bookmarkImage}
-                    handleCardClick={handleCreateCardClick}
                     cards={filteredCards}
                   />
                 </CardSection>
@@ -164,7 +199,6 @@ function App() {
             <Route path="/create">
               <YousCards>
                 <Create
-                  handleCreateCardClick={handleCreateCardClick}
                   level={level}
                   setLevel={setLevel}
                   levelStyle={levelStyle}
@@ -192,7 +226,11 @@ function App() {
           </Switch>
           <Switch>
             <Route path="/favourite">
-              <Favourite />
+              <Favourite
+                cards={cards}
+                levelStyle={levelStyle}
+                bookmarkImage={bookmarkImage}
+              />
             </Route>
           </Switch>
           <Switch>

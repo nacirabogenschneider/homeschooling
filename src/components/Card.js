@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import pink from '../images/pink.svg'
 import { firestore } from '../firebase'
+import CardDetails from '../pages/CardDetails'
 
 export default function Card({
   title,
@@ -10,17 +11,21 @@ export default function Card({
   color,
   isBookmarked,
   id,
-  handleCardClick,
   close,
   bookmarkImage,
   levelStyle,
 }) {
+  const [cardDetailsVisible, setCardDetailsVisible] = useState(false)
   const cardRef = firestore.doc(`cards/${id}`)
   const remove = () => cardRef.delete()
   const update = () => cardRef.update({ isBookmarked: !isBookmarked })
 
+  function handleCardClick() {
+    setCardDetailsVisible(true)
+    console.log('KLICK')
+  }
   return (
-    <CardBox style={{ background: color }} id={id} onClick={handleCardClick}>
+    <CardBox style={{ background: color }} id={id}>
       <ImgWrapper>
         <ImgClose src={close} id={id} onClick={remove}></ImgClose>
         <ImgBookmark
@@ -28,21 +33,28 @@ export default function Card({
           onClick={update}
         ></ImgBookmark>
       </ImgWrapper>
-      <Preview></Preview>
-      <StyledRows>
-        <TextFieldH5>{title}</TextFieldH5>
-      </StyledRows>
-      <StyledRows>
-        <TextField>{description}</TextField>
-      </StyledRows>
-      <StyledRows>
-        <TextFieldAuthor>{author}</TextFieldAuthor>
-      </StyledRows>
-      <ButtonWrapper>
-        <StyledButton style={levelStyle[0].styleLevelBetter}></StyledButton>
-        <StyledButton style={levelStyle[1].styleLevelNormal}></StyledButton>
-        <StyledButton style={levelStyle[2].styleLevelLow}></StyledButton>
-      </ButtonWrapper>
+      <div onClick={handleCardClick}>
+        <Preview></Preview>
+        <StyledRows>
+          <TextFieldH5>{title}</TextFieldH5>
+        </StyledRows>
+        <StyledRows>
+          <TextField>{description}</TextField>
+        </StyledRows>
+        <StyledRows>
+          <TextFieldAuthor>{author}</TextFieldAuthor>
+        </StyledRows>
+        <ButtonWrapper>
+          <StyledButton style={levelStyle[0].styleLevelBetter}></StyledButton>
+          <StyledButton style={levelStyle[1].styleLevelNormal}></StyledButton>
+          <StyledButton style={levelStyle[2].styleLevelLow}></StyledButton>
+        </ButtonWrapper>
+      </div>
+      <div
+        style={cardDetailsVisible ? { display: 'flex' } : { display: 'none' }}
+      >
+        <CardDetails setCardDetailsVisible={setCardDetailsVisible} />
+      </div>
     </CardBox>
   )
 }
