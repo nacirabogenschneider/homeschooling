@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { firestore } from '../firebase'
 import close from '../images/close.svg'
+import RenderTasks from '../components/RenderTasks'
 
 export default function CardDetails({
   setCardDetailsVisible,
@@ -25,83 +26,21 @@ export default function CardDetails({
         'Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung',
     },
   ])
-  function handleUploadSubmit(event) {
-    event.preventDefault()
-    console.log('Upaod', event.target.value)
-    const cardRef = firestore.doc(`cards/${selectedCardbyClick.id}`)
-    cardRef.update({ upload: 'nichts zu lernen' })
-    console.log('Selected With Upload OnSubmit', selectedCardbyClick)
+
+  function handleSubmit() {
+    console.log(
+      'Daten im State speichern, ein einem Array, mit Lehrer ID und daten aus der Basiskarte samt Ids'
+    )
   }
-  function renderTasks() {
-    return tasks.map((task) => (
-      <div
-        key={tasks.indexOf(task)}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <div
-          style={{
-            marginTop: 8,
-            color: 'white',
-            fontSize: '1.2rem',
-            height: 60,
-            width: 60,
-            borderRadius: '50%',
-            background: 'orange',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {tasks.indexOf(task) + 1}
-        </div>
-        <OrangeLine></OrangeLine>
-        <div
-          style={{
-            borderRadius: 12,
-            border: '1px solid lightgrey',
-            padding: 8,
-            marginBottom: 8,
-            width: '100%',
-            boxShadow: ' 0 0 6px 2px #cfcfcf',
-          }}
-        >
-          <h2>{task.title}</h2>
-          <p>{task.description}</p>
-          <div>{task.upload}</div>
-
-          <input
-            type="radio"
-            id="notdone"
-            name={tasks.indexOf(task)}
-            value="notdone"
-          ></input>
-          <label htmlFor="notdone">zu bearbeiten</label>
-
-          <input
-            type="radio"
-            id="done"
-            name={tasks.indexOf(task)}
-            value="done"
-          ></input>
-          <label htmlFor="done">erledigt</label>
-        </div>
-      </div>
-    ))
+  function handleCloseClick() {
+    setCardDetailsVisible(false)
   }
 
   return (
     <DetailSection>
       <Header>
-        <ImgClose
-          src={close}
-          onClick={() => setCardDetailsVisible(false)}
-        ></ImgClose>
+        <ImgClose src={close} onClick={handleCloseClick}></ImgClose>
       </Header>
-
       <ContentSection>
         <div>
           <h2 style={{ color: 'orange' }}>Basis-Informationen</h2>
@@ -113,27 +52,32 @@ export default function CardDetails({
       </ContentSection>
       <CardDetailSection>
         <h2 style={{ color: 'orange' }}>Detail-Informationen</h2>
-
-        {renderTasks()}
+        <RenderTasks tasks={tasks} />
       </CardDetailSection>
       <FormSection>
         <form>
           <h2>Neue Aufgabe erstellen</h2>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label>Aufgabe</label>
-            <input type="text" placeholter="Überschrift"></input>
+            <input
+              type="text"
+              placeholter="Überschrift"
+              onChange={(value) => setTasks(value)}
+            ></input>
             <label>Textfeld</label>
             <input type="textarea"></input>
           </div>
           <UploadSection>
             <h2>Deine Uploads</h2>
-            <div>{selectedCardbyClick.upload}</div>
+            <div></div>
             <div>
               <input type="file"></input>
-              <button onClick={handleUploadSubmit}>Hochladen</button>
+              <button>Hochladen</button>
             </div>
           </UploadSection>
-          <button type="submit">Speichern</button>
+          <button type="submit" onSubmit={handleSubmit}>
+            Speichern
+          </button>
         </form>
       </FormSection>
       <div>hier könnten noch möglichkeiten zum Fragen stellen sein.</div>
@@ -156,21 +100,6 @@ const DetailSection = styled.div`
   background: white;
   z-index: 400;
   box-shadow: 0 0 10px 2px #cfcfcf;
-`
-
-const OrangeLine = styled.div`
-  margin: 8px 0;
-  height: 30px;
-  width: 100%;
-  background: linear-gradient(
-    to right,
-    white 0%,
-    white 49.9%,
-    orange 49.9%,
-    orange 50.1%,
-    white 50.1%,
-    white 100%
-  );
 `
 const ContentSection = styled.section`
   padding: 30px 8px;
@@ -203,6 +132,8 @@ const Header = styled.header`
   position: fixed;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  display: flex;
+  justify-content: flex-end;
   left: 10px;
   right: 10px;
 `
