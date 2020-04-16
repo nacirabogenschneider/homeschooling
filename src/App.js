@@ -257,9 +257,6 @@ const YousCards = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  @media (max-width: 420px) {
-    margin: 40px 0;
-  }
 `
 const AppGrid = styled.section`
   display: grid;
@@ -267,6 +264,9 @@ const AppGrid = styled.section`
   height: 100vh;
   width: 100vw;
   overflow-x: hidden;
+  @media (max-width: 576px) {
+    grid-template-rows: 60px 1fr 60px;
+  }
 `
 const HeaderSection = styled.header`
   display: flex;
@@ -274,12 +274,14 @@ const HeaderSection = styled.header`
   background: linear-gradient(to left, #5e99cf, #5ebd99);
   box-shadow: 0 0 10px 2px #cfcfcf;
 `
-
 const ContentWrapper = styled.section`
   display: flex;
   width: 100vw;
   flex-direction: column;
   justify-content: center;
+  /* @media (max-width: 576px) {
+    overflow-y: scroll;
+  } */
 `
 const DescriptionSection = styled.section`
   display: flex;

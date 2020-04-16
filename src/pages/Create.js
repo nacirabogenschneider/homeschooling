@@ -247,6 +247,11 @@ const CreateSection = styled.section`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  @media (max-width: 576px) {
+    margin: 0;
+    padding: 0;
+  }
 `
 const StyledHeading = styled.h1`
   margin: 40px;

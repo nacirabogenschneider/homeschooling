@@ -117,10 +117,12 @@ const MobileNav = styled.div`
   height: auto;
   background: white;
   border: 1px solid lightgrey;
+  @media (max-width: 576px) {
+    top: 60px;
+  }
 `
 const MobileNavWrapper = styled.nav`
   display: none;
-
   @media (max-width: 576px) {
     display: flex;
     justify-content: center;
