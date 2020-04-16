@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import styled from 'styled-components'
 
-export default function Filter({ options, title, setValue, required }) {
+export default function Filter({ options, title, setValue, required, value }) {
   function onHandleOnChange(value) {
     const labelValue = value.label
     console.log('Im Filter', labelValue)
@@ -13,6 +13,7 @@ export default function Filter({ options, title, setValue, required }) {
     <FilterWrapper>
       <H3>{title}</H3>
       <StyledSelect
+        value={value}
         required={required}
         placeholder="auswählen..."
         options={options}

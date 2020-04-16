@@ -13,6 +13,7 @@ import Navigation from './components/Navigation'
 import RenderCards from './components/RenderCards'
 import Filter from './components/Filter'
 import bookmarkImage from './images/bookmark.svg'
+import refresh from './images/refresh.svg'
 import { firestore } from './firebase'
 import { collectIdsAndDocs } from './utilities.js'
 
@@ -24,7 +25,7 @@ function App() {
   const [schoolOption, setSchoolOption] = useState([])
   const [classesValue, setClassesValue] = useState()
   const [subjectsValue, setSubjectsValue] = useState()
-  const [schoolValue, setSchoolvalue] = useState()
+  const [schoolValue, setSchoolValue] = useState()
   const [cards, setCards] = useState([])
   const [levelStyle, setLevelStyle] = useState([
     { styleLevelBetter: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
@@ -103,12 +104,6 @@ function App() {
       ? (cardsToFilter = filteredCards)
       : (cardsToFilter = cards)
 
-    console.log('Im Schulfilter')
-    console.log('CARDSTOFILTER', cardsToFilter)
-    console.log('schoolValue', schoolValue)
-    console.log('classesValue', classesValue)
-    console.log('SubjectValue', subjectsValue)
-
     const filterCardsBySchool = await cardsToFilter.filter(
       (card) => card.school === schoolValue
     )
@@ -163,7 +158,7 @@ function App() {
                   required={false}
                   options={schoolOption}
                   title={schoolName}
-                  setValue={setSchoolvalue}
+                  setValue={setSchoolValue}
                 />
 
                 <Filter
@@ -178,6 +173,12 @@ function App() {
                   title={subjectsTitle}
                   setValue={setSubjectsValue}
                 />
+                <div style={{ margin: '22px 20px' }}>
+                  <H3>Filter zuücksetzen</H3>
+                  <RefreshButton onClick={() => window.location.reload(false)}>
+                    <RefreshImg src={refresh}></RefreshImg>
+                  </RefreshButton>
+                </div>
               </SelectFilter>
               <DescriptionSection>
                 <h1>Home Schooling - Schule zu Hause</h1>
@@ -330,4 +331,17 @@ const CreateButton = styled(Link)`
 const CreateButtonImage = styled.img`
   width: 50px;
   height: 50px;
+`
+const RefreshButton = styled.button`
+  border-radius: 12px;
+  border: 1px solid lightgrey;
+  box-shadow: 0 0 10px 2px #cfcfcf;
+`
+const RefreshImg = styled.img`
+  height: 20px;
+  margin: 0;
+  padding: 8px;
+`
+const H3 = styled.h3`
+  margin: 0 0 10px 0;
 `
