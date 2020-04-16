@@ -48,26 +48,27 @@ export default function Create({
   const authorId = uuid()
   useEffect(() => {
     if (createSubjectsValue) {
-      const selectedSubject = createSubjectsValue.value
-      if (selectedSubject.label === 'Sport') {
+      if (createSubjectsValue === 'Sport') {
         setColor(sportColor)
-      } else if (selectedSubject.label === 'Mathematik') {
+      } else if (createSubjectsValue === 'Mathematik') {
         setColor(mathColor)
-      } else if (selectedSubject.label === 'Musik') {
+      } else if (createSubjectsValue === 'Musik') {
         setColor(musicColor)
-      } else if (selectedSubject.label === 'Deutsch') {
+      } else if (createSubjectsValue === 'Deutsch') {
         setColor(germanColor)
-      } else if (selectedSubject.label === 'Kunst') {
+      } else if (createSubjectsValue === 'Kunst') {
         setColor(artColor)
-      } else if (selectedSubject.label === 'Theater') {
+      } else if (createSubjectsValue === 'Theater') {
         setColor(theaterColor)
-      } else if (selectedSubject.label === 'Englisch') {
+      } else if (createSubjectsValue === 'Englisch') {
         setColor(englishColor)
-      } else if (selectedSubject.label === 'Sachkunde') {
+      } else if (createSubjectsValue === 'Sachkunde') {
         setColor(bioColor)
-      } else if (selectedSubject.label === 'Medien') {
+      } else if (createSubjectsValue === 'Medien') {
         setColor(medienColor)
-      } else setColor(religionColor)
+      } else if (createSubjectsValue === 'Religion') {
+        setColor(religionColor)
+      }
     }
   }, [createSubjectsValue])
 
@@ -90,13 +91,14 @@ export default function Create({
         description: description,
         author: author,
         authorId: authorId,
-        school: createSchoolValue.value.label,
-        classroom: createClassValue.value.label,
-        subject: createSubjectsValue.value.label,
+        school: createSchoolValue,
+        classroom: createClassValue,
+        subject: createSubjectsValue,
         color: color,
         level: level,
         levelStyle: levelStyle,
         isBookmarked: isBookmarked,
+        upload: upload,
       }
       await firestore.collection('cards').add(card)
     }
@@ -193,22 +195,6 @@ export default function Create({
             title={subjectsTitle}
             setValue={setCreateSubjectsValue}
           />
-
-          {/* <div>
-            <label style={{ margin: '8px 20px' }}>
-              <StyledH3> Dateiupload:</StyledH3>
-              <StyledInputUpload
-                value={upload}
-                type="file"
-                name="file"
-                onChange={handleUpload}
-                placeholder="Freitext als einleitende Erleuterung"
-              ></StyledInputUpload>
-            </label>
-            <button type="button" onClick={onUploadClick}>
-              Upload
-            </button>
-          </div> */}
 
           <StyledFooter> Lern-Level:</StyledFooter>
           <RadioGroup>

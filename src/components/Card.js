@@ -98,7 +98,6 @@ const ImgWrapper = styled.div`
 const ImgBookmark = styled.img`
   height: 40px;
   margin: -5px 2px 0 0;
-  text-shadow: 0 0 6px 2px green;
 `
 const ImgClose = styled.img`
   height: 26px;
