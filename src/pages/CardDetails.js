@@ -4,21 +4,17 @@ import close from '../images/close.svg'
 import RenderTasks from '../components/RenderTasks'
 import { firestore } from '../firebase'
 import CardDetailForm from '../components/CardDetailForm'
-import uuid from 'react-uuid'
 
 export default function CardDetails({ id, setCardDetailsVisible, cards }) {
   const [card, setCard] = useState()
-  const [selectedTasks, setSelectedTasks] = useState()
 
   useEffect(() => {
     const find = cards.find((card) => card.id === id)
     setCard(find)
-    setSelectedCardInformation(card)
   }, [card])
 
-  const [selectedCardInformation, setSelectedCardInformation] = useState()
   const cardRef = firestore.doc(`cards/${id}`)
-  async function handleCloseClick(event) {
+  async function handleCloseClick() {
     cardRef.update({ isClicked: false })
     setCardDetailsVisible(false)
   }

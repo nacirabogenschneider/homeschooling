@@ -36,7 +36,6 @@ function App() {
   ])
   const [level, setLevel] = useState('')
   const [filteredCards, setFilteredCards] = useState(cards)
-  const [selectedCard, setSelectedCard] = useState()
 
   function getCardsFromDatabase() {
     firestore.collection('cards').onSnapshot((snapshot) => {
@@ -134,6 +133,7 @@ function App() {
     )
     setFilteredCards(filterCardsBySubject)
   }
+
   useEffect(() => {
     filterCards()
   }, [schoolValue])
@@ -145,6 +145,7 @@ function App() {
   useEffect(() => {
     classFilter()
   }, [classesValue])
+
   return (
     <Router>
       <AppGrid>
@@ -350,21 +351,6 @@ const RefreshImg = styled.img`
 `
 const H3 = styled.h3`
   margin: 0 0 10px 0;
-`
-
-const StyledInputUpload = styled.input`
-  box-sizing: border-box;
-  width: 200px;
-  padding: 8px;
-  font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid lightgrey;
-  background: white;
-  text-decoration: none;
-  cursor: pointer;
-  &:focus {
-    box-shadow: 0 0 10px 2px orange;
-  }
 `
 const StyledHeading = styled.h1`
   margin: 40px;

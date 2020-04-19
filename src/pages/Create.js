@@ -27,7 +27,6 @@ export default function Create({
   const [color, setColor] = useState('white')
   const isBookmarked = false
   const [upload, setUpload] = useState([])
-
   const sportColor = 'linear-gradient(to right, #1697be, #84d9f3)'
   const mathColor = 'linear-gradient(to right , #a10808, #f34c36 )'
   const germanColor = 'linear-gradient(to right,#073ead, #53aff5)'
@@ -39,9 +38,9 @@ export default function Create({
   const englishColor = 'linear-gradient(to right,#026fb8, #04c96d)'
   const theaterColor = 'linear-gradient(to right,#84d9f3, #1697be)'
   const medienColor = 'linear-gradient(to right,#b9f728, #fc1287)'
-
   const required = 'required'
   const authorId = uuid()
+
   useEffect(() => {
     if (createSubjectsValue) {
       if (createSubjectsValue === 'Sport') {
@@ -74,7 +73,6 @@ export default function Create({
   function handleDescriptionChange(event) {
     setDescription(event.target.value)
   }
-
   function handleAuthorChange(event) {
     setAuthor(event.target.value)
   }

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import pink from '../images/pink.svg'
 import { firestore } from '../firebase'
 import CardDetails from '../pages/CardDetails'
-import { collectIdsAndDocs } from '../utilities.js'
 
 export default function Card({
   title,

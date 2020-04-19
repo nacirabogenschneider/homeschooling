@@ -1,20 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { firestore } from '../firebase'
 import Upload from './Upload'
 import styled from 'styled-components/macro'
-import { database } from 'firebase'
 
 export default function CardDetailForm({ card }) {
-  const [selectedCardbyClick, setSelectedCardbyClick] = useState({})
   const [tasktitle, setTasksTitle] = useState('')
   const [taskContent, setTaskContent] = useState('')
-
   const id = card && card.id
 
   async function handleSubmit(event) {
     event.preventDefault()
     const cardRef = await firestore.doc(`cards/${id}`)
-
     const taskObject = { title: tasktitle, task: taskContent }
     card &&
       cardRef.update({
@@ -26,8 +22,8 @@ export default function CardDetailForm({ card }) {
     <FormSection>
       <form>
         <p>Card-Id: {id}</p>
-        <p>{tasktitle}</p>
-        <p>{taskContent}</p>
+        <p>Titel: {tasktitle}</p>
+        <p>Inhalt: {taskContent}</p>
         <h2>Neue Aufgabe erstellen</h2>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label>Aufgabe</label>

@@ -24,7 +24,6 @@ const FilterWrapper = styled.div`
 const H3 = styled.h3`
   margin: 0 0 10px 0;
 `
-
 const StyledSelect = styled(Select)`
   width: 200px;
   &:focus {

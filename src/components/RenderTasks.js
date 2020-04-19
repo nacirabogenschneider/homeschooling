@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import uuid from 'react-uuid'
 
 export default function RenderTasks({ card }) {
   const [tasks, setTasks] = useState()
