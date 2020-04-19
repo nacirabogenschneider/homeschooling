@@ -117,6 +117,7 @@ export default function Create({
           author={author}
           color={color}
           cards={cards}
+          setCardDetailsVisible={''}
         />
         <StyledForm onSubmit={handleSubmit}>
           <H2Wrapper>

@@ -1,33 +1,51 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
+import uuid from 'react-uuid'
 
-export default function RenderTasks({ tasks }) {
-  return tasks.map((task) => (
-    <RenderSection key={tasks.indexOf(task)}>
-      <TaskNumber>{tasks.indexOf(task) + 1}</TaskNumber>
-      <OrangeLine></OrangeLine>
-      <BasisInformation>
-        <h2>{task.title}</h2>
-        <p>{task.description}</p>
-        <div>{task.upload}</div>
-        <input
-          type="radio"
-          id="notdone"
-          name={tasks.indexOf(task)}
-          value="notdone"
-        ></input>
-        <label htmlFor="notdone">zu bearbeiten</label>
-        <input
-          type="radio"
-          id="done"
-          name={tasks.indexOf(task)}
-          value="done"
-        ></input>
-        <label htmlFor="done">erledigt</label>
-      </BasisInformation>
-    </RenderSection>
-  ))
+export default function RenderTasks({ card }) {
+  const [tasks, setTasks] = useState()
+
+  useEffect(() => {
+    setSelectedTasks()
+  }, [card])
+
+  async function setSelectedTasks() {
+    const taskCard = await card
+    card && setTasks(taskCard.tasks)
+  }
+
+  return (
+    <div>
+      {tasks &&
+        tasks.map((task) => (
+          <RenderSection key={tasks.indexOf(task)}>
+            <TaskNumber>{tasks.indexOf(task) + 1}</TaskNumber>
+            <OrangeLine></OrangeLine>
+            <BasisInformation>
+              <h2>{task.title}</h2>
+              <p>{task.task}</p>
+              <div>{task.upload}</div>
+              <input
+                type="radio"
+                id="notdone"
+                name={tasks.indexOf(task)}
+                value="notdone"
+              ></input>
+              <label htmlFor="notdone">zu bearbeiten</label>
+              <input
+                type="radio"
+                id="done"
+                name={tasks.indexOf(task)}
+                value="done"
+              ></input>
+              <label htmlFor="done">erledigt</label>
+            </BasisInformation>
+          </RenderSection>
+        ))}
+    </div>
+  )
 }
+
 const OrangeLine = styled.div`
   margin: 8px 0;
   height: 30px;

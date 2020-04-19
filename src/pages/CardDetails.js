@@ -3,27 +3,20 @@ import styled from 'styled-components/macro'
 import close from '../images/close.svg'
 import RenderTasks from '../components/RenderTasks'
 import { firestore } from '../firebase'
+import CardDetailForm from '../components/CardDetailForm'
+import uuid from 'react-uuid'
 
-export default function CardDetails({
-  id,
-  setCardDetailsVisible,
-  selectedCard,
-  cards,
-  cardDetailsVisible,
-}) {
+export default function CardDetails({ id, setCardDetailsVisible, cards }) {
   const [card, setCard] = useState()
   const [selectedTasks, setSelectedTasks] = useState()
 
   useEffect(() => {
     const find = cards.find((card) => card.id === id)
-    console.log('cart', find)
     setCard(find)
     setSelectedCardInformation(card)
   }, [card])
 
   const [selectedCardInformation, setSelectedCardInformation] = useState()
-
-  console.log('selectedCardInformation', selectedCardInformation)
   const cardRef = firestore.doc(`cards/${id}`)
   async function handleCloseClick(event) {
     cardRef.update({ isClicked: false })
@@ -53,7 +46,8 @@ export default function CardDetails({
       </ContentSection>
       <CardDetailSection>
         <h2 style={{ color: 'orange' }}>Detail-Informationen</h2>
-        {/* <RenderTasks tasks={selectedTasks} /> */}
+        <RenderTasks card={card} />
+        <CardDetailForm card={card} />
       </CardDetailSection>
       <div>hier könnten noch möglichkeiten zum Fragen stellen sein.</div>
       <Footer></Footer>
@@ -64,12 +58,11 @@ const DetailSection = styled.div`
   position: absolute;
   top: 10px;
   padding: 0;
-  width: 200px;
-
-  /* left: 10px;
-  right: 10px; */
+  left: 10px;
+  right: 10px;
   bottom: 10px;
   display: flex;
+
   flex-direction: column;
   overflow-x: scroll;
   border-radius: 12px;

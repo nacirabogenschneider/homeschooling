@@ -41,7 +41,6 @@ function App() {
   function getCardsFromDatabase() {
     firestore.collection('cards').onSnapshot((snapshot) => {
       const dbCards = snapshot.docs.map(collectIdsAndDocs)
-
       setCards(dbCards)
       setFilteredCards(dbCards)
     })
@@ -125,7 +124,6 @@ function App() {
     )
     setFilteredCards(filterCardsByClass)
   }
-
   async function subjecsFilter() {
     let cardsToFilter
     schoolValue || classesValue || subjectsValue
@@ -136,7 +134,6 @@ function App() {
     )
     setFilteredCards(filterCardsBySubject)
   }
-
   useEffect(() => {
     filterCards()
   }, [schoolValue])
@@ -148,7 +145,6 @@ function App() {
   useEffect(() => {
     classFilter()
   }, [classesValue])
-
   return (
     <Router>
       <AppGrid>
@@ -212,9 +208,6 @@ function App() {
                   />
                 </CardSection>
                 <StyledHeading>Deine Detail-Karten</StyledHeading>
-
-                <CardDetailForm cards={cards} />
-
                 <Create
                   level={level}
                   setLevel={setLevel}
@@ -296,9 +289,6 @@ const ContentWrapper = styled.section`
   width: 100vw;
   flex-direction: column;
   justify-content: center;
-  /* @media (max-width: 576px) {
-    overflow-y: scroll;
-  } */
 `
 const DescriptionSection = styled.section`
   display: flex;

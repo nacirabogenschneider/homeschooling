@@ -25,7 +25,7 @@ export default function Card({
   const update = () => cardRef.update({ isBookmarked: !isBookmarked })
 
   function handleCardClick() {
-    setCardDetailsVisible(!cardDetailsVisible)
+    setCardDetailsVisible && setCardDetailsVisible(!cardDetailsVisible)
     cardRef.update({ isClicked: true })
   }
 
