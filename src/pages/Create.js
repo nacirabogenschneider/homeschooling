@@ -5,8 +5,6 @@ import Filter from '../components/Filter'
 import arrow from '../images/close.svg'
 import uuid from 'react-uuid'
 import { firestore } from '../firebase'
-import close from '../images/close.svg'
-import RenderCards from '../components/RenderCards'
 
 export default function Create({
   schoolOption,
@@ -16,11 +14,9 @@ export default function Create({
   subjects,
   subjectsTitle,
   cards,
-  setCards,
   levelStyle,
   level,
   setLevel,
-  handleCreateCardClick,
 }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -98,29 +94,20 @@ export default function Create({
         level: level,
         levelStyle: levelStyle,
         isBookmarked: isBookmarked,
+        isClicked: false,
         upload: upload,
+        tasks: [],
+        cardId: uuid(),
       }
       await firestore.collection('cards').add(card)
     }
   }
-
   function onRadioChange(event) {
     setLevel && setLevel(event.target.value)
   }
 
   return (
     <CreateSection>
-      <StyledHeading>Deine Basis-Karten</StyledHeading>
-      <CardSection>
-        <RenderCards
-          levelStyle={levelStyle}
-          close={close}
-          handleCardClick={handleCreateCardClick}
-          cards={cards}
-        />
-      </CardSection>
-      <StyledHeading>Deine Detail-Karten</StyledHeading>
-
       <StyledHeading>Erstelle eine neue Lernkarte</StyledHeading>
       <CardPreview>
         <Card
@@ -175,7 +162,6 @@ export default function Create({
           </StyledLabel>
           <Filter
             required={required}
-            value={createClassValue}
             options={schoolOption}
             title={schoolName}
             setValue={setCreateSchoolValue}
@@ -183,14 +169,12 @@ export default function Create({
 
           <Filter
             required={required}
-            value={createClassValue}
             options={classes}
             title={classesTitle}
             setValue={setCreateClassValue}
           />
           <Filter
             required={required}
-            value={createSubjectsValue}
             options={subjects}
             title={subjectsTitle}
             setValue={setCreateSubjectsValue}
@@ -309,20 +293,6 @@ const StyledInput = styled.input`
     box-shadow: 0 0 10px 2px orange;
   }
 `
-const StyledInputUpload = styled.input`
-  box-sizing: border-box;
-  width: 200px;
-  padding: 8px;
-  font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid lightgrey;
-  background: white;
-  text-decoration: none;
-  cursor: pointer;
-  &:focus {
-    box-shadow: 0 0 10px 2px orange;
-  }
-`
 const Img = styled.img`
   height: 20px;
 `
@@ -340,17 +310,6 @@ const StyledSubmitButton = styled.button`
   }
   &:focus {
     box-shadow: 0 0 10px 2px orange;
-  }
-`
-const CardSection = styled.header`
-  display: flex;
-  width: 100vw;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  background: transparent;
-  @media (max-width: 768px) {
-    margin: 0 0 50px 0;
-    justify-content: center;
   }
 `
 const RadioGroup = styled.div`

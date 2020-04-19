@@ -1,85 +1,60 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import { firestore } from '../firebase'
 import close from '../images/close.svg'
 import RenderTasks from '../components/RenderTasks'
+import { firestore } from '../firebase'
 
 export default function CardDetails({
+  id,
   setCardDetailsVisible,
-  selectedCardbyClick,
+  selectedCard,
+  cards,
+  cardDetailsVisible,
 }) {
-  const [tasks, setTasks] = useState([
-    {
-      title: 'Die erste Aufgabe',
-      description:
-        'Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung',
-      upload: 'upload',
-    },
-    {
-      title: 'Die zweite Aufgabe',
-      description:
-        'Eine weitere Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung',
-    },
-    {
-      title: 'Die dritte Aufgabe',
-      description:
-        'Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung Eine kurze Testbeschreibung',
-    },
-  ])
+  const [card, setCard] = useState()
+  const [selectedTasks, setSelectedTasks] = useState()
 
-  function handleSubmit() {
-    console.log(
-      'Daten im State speichern, ein einem Array, mit Lehrer ID und daten aus der Basiskarte samt Ids'
-    )
-  }
-  function handleCloseClick() {
+  useEffect(() => {
+    const find = cards.find((card) => card.id === id)
+    console.log('cart', find)
+    setCard(find)
+    setSelectedCardInformation(card)
+  }, [card])
+
+  const [selectedCardInformation, setSelectedCardInformation] = useState()
+
+  console.log('selectedCardInformation', selectedCardInformation)
+  const cardRef = firestore.doc(`cards/${id}`)
+  async function handleCloseClick(event) {
+    cardRef.update({ isClicked: false })
     setCardDetailsVisible(false)
   }
 
   return (
-    <DetailSection>
+    <DetailSection id={card && card.id}>
       <Header>
-        <ImgClose src={close} onClick={handleCloseClick}></ImgClose>
+        <ImgClose
+          id={card && card.id}
+          src={close}
+          onClick={handleCloseClick}
+        ></ImgClose>
       </Header>
       <ContentSection>
         <div>
           <h2 style={{ color: 'orange' }}>Basis-Informationen</h2>
-          <h2>Titel: {selectedCardbyClick.title}</h2>
-          <small>Autor: {selectedCardbyClick.author}</small>
-          <p>Beschreibung: {selectedCardbyClick.description}</p>
-          <p>Lernlevel :{selectedCardbyClick.level}</p>
+          <h2>Titel: {card && card.title}</h2>
+          <small>Autor: {card && card.author}</small>
+          <p>
+            Beschreibung:
+            {card && card.description}
+          </p>
+          <p>Lernlevel :{card && card.level}</p>
         </div>
       </ContentSection>
       <CardDetailSection>
         <h2 style={{ color: 'orange' }}>Detail-Informationen</h2>
-        <RenderTasks tasks={tasks} />
+        {/* <RenderTasks tasks={selectedTasks} /> */}
       </CardDetailSection>
-      <FormSection>
-        <form>
-          <h2>Neue Aufgabe erstellen</h2>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label>Aufgabe</label>
-            <input
-              type="text"
-              placeholter="Überschrift"
-              onChange={(value) => setTasks(value)}
-            ></input>
-            <label>Textfeld</label>
-            <input type="textarea"></input>
-          </div>
-          <UploadSection>
-            <h2>Deine Uploads</h2>
-            <div></div>
-            <div>
-              <input type="file"></input>
-              <button>Hochladen</button>
-            </div>
-          </UploadSection>
-          <button type="submit" onSubmit={handleSubmit}>
-            Speichern
-          </button>
-        </form>
-      </FormSection>
       <div>hier könnten noch möglichkeiten zum Fragen stellen sein.</div>
       <Footer></Footer>
     </DetailSection>
@@ -89,8 +64,10 @@ const DetailSection = styled.div`
   position: absolute;
   top: 10px;
   padding: 0;
-  left: 10px;
-  right: 10px;
+  width: 200px;
+
+  /* left: 10px;
+  right: 10px; */
   bottom: 10px;
   display: flex;
   flex-direction: column;
@@ -106,26 +83,9 @@ const ContentSection = styled.section`
   margin: 8px;
   height: 100vh;
 `
-const FormSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid lightgrey;
-  border-radius: 12px;
-  padding: 16px;
-  margin: 8px 16px 50px 16px;
-  background: #f5f5f5;
-`
 const CardDetailSection = styled.section`
   padding: 8px;
   margin: 8px 16px 50px 16px;
-`
-
-const UploadSection = styled.div`
-  border-radius: 12px;
-  border: 1px solid lightgrey;
-  padding: 8px;
-  margin: 10px;
-  width: 240px;
 `
 const Header = styled.header`
   background: linear-gradient(to left, #5e99cf, #5ebd99);
@@ -153,8 +113,3 @@ const ImgClose = styled.img`
   height: 26px;
   padding: 5px;
 `
-
-// @media (max-width: 768px) {
-//   flex-direction: column;
-// }
-// `

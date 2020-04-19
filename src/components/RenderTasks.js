@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import { firestore } from '../firebase'
-import close from '../images/close.svg'
 
 export default function RenderTasks({ tasks }) {
   return tasks.map((task) => (

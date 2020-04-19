@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import pink from '../images/pink.svg'
 import { firestore } from '../firebase'
 import CardDetails from '../pages/CardDetails'
+import { collectIdsAndDocs } from '../utilities.js'
 
 export default function Card({
   title,
@@ -15,20 +16,19 @@ export default function Card({
   bookmarkImage,
   levelStyle,
   cards,
+  cardDetailsVisible,
+  setCardDetailsVisible,
+  isClicked,
 }) {
-  const [cardDetailsVisible, setCardDetailsVisible] = useState(false)
   const cardRef = firestore.doc(`cards/${id}`)
   const remove = () => cardRef.delete()
   const update = () => cardRef.update({ isBookmarked: !isBookmarked })
-  const [selectedCardbyClick, setSelectedCardbyClick] = useState({})
 
-  async function handleCardClick(id) {
-    console.log('event.target.value', id)
-    const selectedCard = await cards.find((card) => card.id === id)
-    setSelectedCardbyClick(selectedCard)
-    setCardDetailsVisible(true)
-    console.log('KLICK', selectedCard)
+  function handleCardClick() {
+    setCardDetailsVisible(!cardDetailsVisible)
+    cardRef.update({ isClicked: true })
   }
+
   return (
     <CardBox style={{ background: color }} id={id}>
       <ImgWrapper>
@@ -56,11 +56,17 @@ export default function Card({
         </ButtonWrapper>
       </div>
       <div
-        style={cardDetailsVisible ? { display: 'flex' } : { display: 'none' }}
+        style={
+          isClicked && cardDetailsVisible
+            ? { display: 'flex' }
+            : { display: 'none' }
+        }
       >
         <CardDetails
           setCardDetailsVisible={setCardDetailsVisible}
-          selectedCardbyClick={selectedCardbyClick}
+          cardDetailsVisible={cardDetailsVisible}
+          cards={cards}
+          id={id}
         />
       </div>
     </CardBox>

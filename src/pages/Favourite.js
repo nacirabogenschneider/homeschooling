@@ -9,12 +9,10 @@ export default function Favourite({ cards, bookmarkImage, levelStyle }) {
       (card) => card.isBookmarked === true
     )
     setCardsWithBookmark(bookmardCards)
-    console.log('bookmardCards', bookmardCards)
   }
 
   useEffect(() => {
     filterByBookmark()
-    console.log('cardsWithBookmark', cardsWithBookmark)
   }, [cards])
   return (
     <div>

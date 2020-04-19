@@ -16,6 +16,8 @@ import bookmarkImage from './images/bookmark.svg'
 import refresh from './images/refresh.svg'
 import { firestore } from './firebase'
 import { collectIdsAndDocs } from './utilities.js'
+import close from './images/close.svg'
+import CardDetailForm from './components/CardDetailForm'
 
 function App() {
   const hamburgSchool = hamburg.hamburg
@@ -34,14 +36,17 @@ function App() {
   ])
   const [level, setLevel] = useState('')
   const [filteredCards, setFilteredCards] = useState(cards)
+  const [selectedCard, setSelectedCard] = useState()
 
-  async function getCardsFromDatabase() {
+  function getCardsFromDatabase() {
     firestore.collection('cards').onSnapshot((snapshot) => {
       const dbCards = snapshot.docs.map(collectIdsAndDocs)
+
       setCards(dbCards)
       setFilteredCards(dbCards)
     })
   }
+
   useEffect(() => {
     getCardsFromDatabase()
   }, [])
@@ -160,7 +165,6 @@ function App() {
                   title={schoolName}
                   setValue={setSchoolValue}
                 />
-
                 <Filter
                   required={false}
                   options={classes}
@@ -199,6 +203,18 @@ function App() {
           <Switch>
             <Route path="/create">
               <YousCards>
+                <StyledHeading>Deine Basis-Karten</StyledHeading>
+                <CardSection>
+                  <RenderCards
+                    levelStyle={levelStyle}
+                    close={close}
+                    cards={cards}
+                  />
+                </CardSection>
+                <StyledHeading>Deine Detail-Karten</StyledHeading>
+
+                <CardDetailForm cards={cards} />
+
                 <Create
                   level={level}
                   setLevel={setLevel}
@@ -344,4 +360,22 @@ const RefreshImg = styled.img`
 `
 const H3 = styled.h3`
   margin: 0 0 10px 0;
+`
+
+const StyledInputUpload = styled.input`
+  box-sizing: border-box;
+  width: 200px;
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid lightgrey;
+  background: white;
+  text-decoration: none;
+  cursor: pointer;
+  &:focus {
+    box-shadow: 0 0 10px 2px orange;
+  }
+`
+const StyledHeading = styled.h1`
+  margin: 40px;
 `
