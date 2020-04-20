@@ -36,6 +36,7 @@ function App() {
   ])
   const [level, setLevel] = useState('')
   const [filteredCards, setFilteredCards] = useState(cards)
+  const [active, setActive] = useState('home')
 
   function getCardsFromDatabase() {
     firestore.collection('cards').onSnapshot((snapshot) => {
@@ -150,7 +151,7 @@ function App() {
     <Router>
       <AppGrid>
         <HeaderSection>
-          <Navigation />
+          <Navigation active={active} setActive={setActive} />
         </HeaderSection>
         <ContentWrapper>
           <Switch>
@@ -210,6 +211,7 @@ function App() {
                 </CardSection>
                 <StyledHeading>Deine Detail-Karten</StyledHeading>
                 <Create
+                  setActive={setActive}
                   level={level}
                   setLevel={setLevel}
                   levelStyle={levelStyle}

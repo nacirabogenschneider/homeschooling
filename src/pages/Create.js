@@ -17,6 +17,7 @@ export default function Create({
   levelStyle,
   level,
   setLevel,
+  setActive,
 }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -41,6 +42,9 @@ export default function Create({
   const required = 'required'
   const authorId = uuid()
 
+  useEffect(() => {
+    setActive('create')
+  }, [])
   useEffect(() => {
     if (createSubjectsValue) {
       if (createSubjectsValue === 'Sport') {

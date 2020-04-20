@@ -10,7 +10,7 @@ import menu from '../images/menu.svg'
 import close from '../images/close.svg'
 import { Transition } from 'react-spring/renderprops'
 
-export default function Navigation() {
+export default function Navigation({ active, setActive }) {
   const [toggle, setToggle] = useState(false)
   const onToggle = () => setToggle(!toggle)
 
@@ -39,6 +39,53 @@ export default function Navigation() {
         </StyledNavLink>
       </Nav>
       <MobileNavWrapper>
+        <StyledSingleNavLinkWrapper>
+          <StyledSingleNavLink
+            onClick={() => setActive('home')}
+            style={
+              active === 'home' ? { display: 'block' } : { display: 'none' }
+            }
+          >
+            <NavIcon src={home}></NavIcon>
+          </StyledSingleNavLink>
+
+          <StyledSingleNavLink
+            onClick={() => setActive('fav')}
+            style={
+              active === 'fav' ? { display: 'block' } : { display: 'none' }
+            }
+          >
+            <NavIcon src={fav}></NavIcon>
+          </StyledSingleNavLink>
+
+          <StyledSingleNavLink
+            onClick={() => setActive('classroom')}
+            style={
+              active === 'classroom'
+                ? { display: 'block' }
+                : { display: 'none' }
+            }
+          >
+            <NavIcon src={classroom}></NavIcon>
+          </StyledSingleNavLink>
+          <StyledSingleNavLink
+            onClick={() => setActive('plan')}
+            style={
+              active === 'plan' ? { display: 'block' } : { display: 'none' }
+            }
+          >
+            <NavIcon src={today}></NavIcon>
+          </StyledSingleNavLink>
+          <StyledSingleNavLink
+            onClick={() => setActive('profile')}
+            style={
+              active === 'profile' ? { display: 'block' } : { display: 'none' }
+            }
+          >
+            <NavIcon src={profile}></NavIcon>
+          </StyledSingleNavLink>
+        </StyledSingleNavLinkWrapper>
+
         <Menu onClick={onToggle}>
           <Transition
             items={toggle}
@@ -61,42 +108,44 @@ export default function Navigation() {
             }
           </Transition>
         </Menu>
-
-        {toggle && (
-          <MobileNav>
-            <label onClick={onToggle}>
-              <StyledNavLink to="/">
-                <NavIcon src={home}></NavIcon>
-                <StyledSpan>Home</StyledSpan>
-              </StyledNavLink>
-            </label>
-            <label onClick={onToggle}>
-              <StyledNavLink to="/favourite">
-                <NavIcon src={fav}></NavIcon>
-                <StyledSpan>Meine Favoriten</StyledSpan>
-              </StyledNavLink>
-            </label>
-            <label onClick={onToggle}>
-              <StyledNavLink to="/classroom">
-                <NavIcon src={classroom}></NavIcon>
-                <StyledSpan>Meine Klasse</StyledSpan>
-              </StyledNavLink>
-            </label>
-            <label onClick={onToggle}>
-              <StyledNavLink to="/plan">
-                <NavIcon src={today}></NavIcon>
-                <StyledSpan>Mein Stundenplan</StyledSpan>
-              </StyledNavLink>
-            </label>
-            <label onClick={onToggle}>
-              <StyledNavLink to="/profile">
-                <NavIcon src={profile}></NavIcon>
-                <StyledSpan>Meine Profil</StyledSpan>
-              </StyledNavLink>
-            </label>
-          </MobileNav>
-        )}
       </MobileNavWrapper>
+      {toggle && (
+        <MobileNav>
+          <label onClick={onToggle}>
+            <StyledNavLink to="/" onClick={() => setActive('home')}>
+              <NavIcon src={home}></NavIcon>
+              <StyledSpan>Home</StyledSpan>
+            </StyledNavLink>
+          </label>
+          <label onClick={onToggle}>
+            <StyledNavLink to="/favourite" onClick={() => setActive('fav')}>
+              <NavIcon src={fav}></NavIcon>
+              <StyledSpan>Meine Favoriten</StyledSpan>
+            </StyledNavLink>
+          </label>
+          <label onClick={onToggle}>
+            <StyledNavLink
+              to="/classroom"
+              onClick={() => setActive('classroom')}
+            >
+              <NavIcon src={classroom}></NavIcon>
+              <StyledSpan>Meine Klasse</StyledSpan>
+            </StyledNavLink>
+          </label>
+          <label onClick={onToggle}>
+            <StyledNavLink to="/plan" onClick={() => setActive('plan')}>
+              <NavIcon src={today}></NavIcon>
+              <StyledSpan>Mein Stundenplan</StyledSpan>
+            </StyledNavLink>
+          </label>
+          <label onClick={onToggle}>
+            <StyledNavLink to="/profile" onClick={() => setActive('profile')}>
+              <NavIcon src={profile}></NavIcon>
+              <StyledSpan>Meine Profil</StyledSpan>
+            </StyledNavLink>
+          </label>
+        </MobileNav>
+      )}
     </>
   )
 }
@@ -117,6 +166,7 @@ const MobileNav = styled.div`
   height: auto;
   background: white;
   border: 1px solid lightgrey;
+  z-index: 300;
   @media (max-width: 576px) {
     top: 60px;
   }
@@ -125,7 +175,8 @@ const MobileNavWrapper = styled.nav`
   display: none;
   @media (max-width: 576px) {
     display: flex;
-    justify-content: center;
+    width: 100vw;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
     z-index: 300;
@@ -149,9 +200,28 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   @media (max-width: 576px) {
     padding: 8px 40px;
+    width: 100vw;
+    border-bottom: 0.3px solid orange;
     &:hover {
       background: orange;
     }
+  }
+`
+
+const StyledSingleNavLink = styled.div`
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  padding: 10px;
+`
+const StyledSingleNavLinkWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  @media (max-width: 576px) {
+    padding: 10px;
+    border-radius: 50%;
   }
 `
 const NavIcon = styled.img`
