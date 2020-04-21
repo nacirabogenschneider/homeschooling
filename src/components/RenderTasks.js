@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
+import ReactHtmlParser from 'react-html-parser'
 
 export default function RenderTasks({ card }) {
   const [tasks, setTasks] = useState()
@@ -22,7 +23,7 @@ export default function RenderTasks({ card }) {
             <OrangeLine></OrangeLine>
             <BasisInformation>
               <h2>{task.title}</h2>
-              <p>{task.task}</p>
+              <div>{ReactHtmlParser(task.task)}</div>
               <div>{task.upload}</div>
               <input
                 type="radio"
