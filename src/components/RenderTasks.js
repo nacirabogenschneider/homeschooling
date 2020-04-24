@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import ReactHtmlParser from 'react-html-parser'
+import closeBlack from '../images/closeBlack.svg'
+import { firestore } from '../firebase'
+
 
 export default function RenderTasks({ card }) {
   const [tasks, setTasks] = useState()
@@ -13,6 +16,17 @@ export default function RenderTasks({ card }) {
     const taskCard = await card
     card && setTasks(taskCard.tasks)
   }
+ async function removeTask(event){
+   const taskToRemoveId = event.target.id
+   console.log(taskToRemoveId)
+  const cardRef = await firestore.doc(`cards/${card.id}`)
+    const newTaskList = tasks.filter(task => task.taskId !== taskToRemoveId)
+    console.log('newTaskList', newTaskList)
+    
+    cardRef.update({
+      tasks: newTaskList,
+    })
+  }
 
   return (
     <div>
@@ -22,6 +36,7 @@ export default function RenderTasks({ card }) {
             <TaskNumber>{tasks.indexOf(task) + 1}</TaskNumber>
             <OrangeLine></OrangeLine>
             <BasisInformation>
+              <img style={{height: 24}} src={closeBlack}  id={task.taskId} onClick={removeTask}></img>
               <h2>{task.title}</h2>
               <div>{ReactHtmlParser(task.task)}</div>
               <div>{task.upload}</div>
@@ -64,6 +79,7 @@ const RenderSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
 `
 const TaskNumber = styled.div`
   margin-top: 8px;

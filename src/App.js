@@ -18,6 +18,7 @@ import { firestore } from './firebase'
 import { collectIdsAndDocs } from './utilities.js'
 import close from './images/close.svg'
 import CardDetailForm from './components/CardDetailForm'
+import SignIn from './pages/SignIn'
 
 function App() {
   const hamburgSchool = hamburg.hamburg
@@ -156,7 +157,9 @@ function App() {
         <ContentWrapper>
           <Switch>
             <Route exact path="/">
-              <SelectFilter>
+              <SignIn />
+
+                <SelectFilter>
                 <Filter
                   required={false}
                   options={schoolOption}

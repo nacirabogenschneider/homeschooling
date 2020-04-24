@@ -4,6 +4,7 @@ import Upload from './Upload'
 import Editor from './Editor'
 import styled from 'styled-components/macro'
 import ReactHtmlParser from 'react-html-parser'
+import uuid from 'react-uuid'
 
 export default function CardDetailForm({ card }) {
   const [tasktitle, setTasksTitle] = useState('')
@@ -14,7 +15,7 @@ export default function CardDetailForm({ card }) {
   async function handleSubmit(event) {
     event.preventDefault()
     const cardRef = await firestore.doc(`cards/${id}`)
-    const taskObject = { title: tasktitle, task: text }
+    const taskObject = { title: tasktitle, task: text, taskId: uuid() }
     card &&
       cardRef.update({
         tasks: [...card.tasks, taskObject],
@@ -22,6 +23,8 @@ export default function CardDetailForm({ card }) {
 
     setText('')
   }
+
+
 
   return (
     <FormSection>
