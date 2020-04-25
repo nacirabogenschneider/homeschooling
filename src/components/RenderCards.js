@@ -30,6 +30,7 @@ export default function RenderCard({
       setCardDetailsVisible={setCardDetailsVisible}
       setSelectedCard={setSelectedCard}
       selectedCard={selectedCard}
+      cardPreview={card.cardPreview}
     />
   ))
 }

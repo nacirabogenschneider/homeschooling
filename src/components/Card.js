@@ -20,6 +20,7 @@ export default function Card({
   cardDetailsVisible,
   setCardDetailsVisible,
   isClicked,
+  cardPreview,
 }) {
   const cardRef = firestore.doc(`cards/${id}`)
   const remove = () => cardRef.delete()
@@ -39,9 +40,9 @@ export default function Card({
           onClick={update}
         ></ImgBookmark>
       </ImgWrapper>
-      <div id={id} onClick={() => handleCardClick(id)}>
-        <Preview></Preview>
-        <StyledRows>
+      <div id={id} onClick={() => handleCardClick(id)} style={{display:'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <Preview src={cardPreview}></Preview>
+        <div><StyledRows>
           <TextFieldH5>{title}</TextFieldH5>
         </StyledRows>
         <StyledRows>
@@ -49,7 +50,7 @@ export default function Card({
         </StyledRows>
         <StyledRows>
           <TextFieldAuthor>{author}</TextFieldAuthor>
-        </StyledRows>
+        </StyledRows></div>
         <ButtonWrapper>
           <StyledButton style={levelStyle[0].styleLevelBetter}></StyledButton>
           <StyledButton style={levelStyle[1].styleLevelNormal}></StyledButton>
@@ -83,11 +84,13 @@ const CardBox = styled.section`
   border-radius: 14px;
   box-shadow: 0 0 10px 2px #cfcfcf;
 `
-const Preview = styled.div`
-  height: 110px;
+const Preview = styled.img`
+  height: 115px;
+  width: 195px;
   background: white;
-  margin: 0 8px 8px 8px;
-  box-shadow: inset 0 0 6px 2px #cfcfcf;
+  margin: 0 0 8px 0;
+  box-shadow: inset 0 0 6px 2px #787878;
+  
 `
 const StyledRows = styled.div`
   display: flex;
@@ -120,18 +123,21 @@ const StyledButton = styled.div`
   width: 20px;
 `
 const ButtonWrapper = styled.div`
+  width: 100%;
   display: flex;
   position: relative;
-  right: -130px;
-  bottom: -5px;
+  left: 130px;
+  bottom: -8px;
 `
 const TextFieldH5 = styled.h5`
+  width: 100%;
   font-size: 1rem;
   margin: 0;
   padding: 4px 8px;
   color: grey;
 `
 const TextField = styled.p`
+width: 180px;
   font-size: 14px;
   margin: 0;
   padding: 4px 8px;

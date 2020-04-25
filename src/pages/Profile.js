@@ -11,14 +11,15 @@ export default function Profile({cards, schoolOption, setSchoolOption}) {
     userId: 1,
     name: 'Nacira',
     lastName: 'Bogenschneider',
-    email: 'mail@nacira.de',
+    email: 'mail@mustermann.de',
     userGroup: 'teacher',
     school: 'Musterschule, Musterort',
     schoolId: 1234,
-    phone: '',
+    phone: '0172 / 123 1234 4',
     description: '',
     subjects:['Mathematik', 'Deutsch', 'Musik'],
-    classes: ['2a', 'VSKb', '4c']
+    classes: ['2a', 'VSKb', '4c'],
+    pic: 'https://source.unsplash.com/user/cowomen/200x200'
   }
 
   const classes = [
@@ -109,15 +110,15 @@ function toggle(){
 
   return <SectionWrapper >
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}> 
-        <ImageWrapper></ImageWrapper>
+        <ImageWrapper src={user.pic}></ImageWrapper>
            <p>Max Mustermann </p>
           </div>
         <ProfileDataWrapper>
             <StyledRow><p>Schule: {user.school}</p></StyledRow>
 <StyledRow><p>Fächer:{user.subjects.map(subject=> <Span key={subject}>{subject}</Span>)}</p> </StyledRow>
             <StyledRow><p>Klassen: {user.classes.map(room => <Classes key={room}>{room}</Classes>)}</p></StyledRow>
-            <StyledRow><p>Email: mail@mustermann.de</p></StyledRow>
-            <StyledRow><p>Telefon: 0172 / 528 70 69</p></StyledRow>
+            <StyledRow><p>Email: {user.email} </p></StyledRow>
+<StyledRow><p>Telefon: {user.phone}</p></StyledRow>
         </ProfileDataWrapper>
         <ProfileContentWrapper>
 
@@ -167,7 +168,7 @@ align-items: center;
 
 flex-wrap: wrap;  
 `
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.img`
 height: 200px;
 width: 200px;
 margin: 20px; 

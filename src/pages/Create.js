@@ -37,6 +37,7 @@ export default function Create({
   const medienColor = 'linear-gradient(to right,#b9f728, #fc1287)'
   const required = 'required'
   const authorId = uuid()
+  const [cardPreview, setCardPreview]= useState('')
 
   useEffect(() => {
     setActive('create')
@@ -94,12 +95,16 @@ export default function Create({
         upload: upload,
         tasks: [],
         cardId: uuid(),
+        cardPreview: cardPreview  
       }
       await firestore.collection('cards').add(card)
     }
   }
   function onRadioChange(event) {
     setLevel && setLevel(event.target.value)
+  }
+  function handlePreviewChange(event){
+    setCardPreview && setCardPreview(event.target.value)
   }
 
   return (
@@ -114,6 +119,7 @@ export default function Create({
           color={color}
           cards={cards}
           setCardDetailsVisible={''}
+          cardPreview={cardPreview}
         />
         <StyledForm onSubmit={handleSubmit}>
           <H2Wrapper>
@@ -133,8 +139,18 @@ export default function Create({
             ></StyledInput>
           </StyledLabel>
           <StyledLabel>
+            <StyledH3>Vorschaubild URL:</StyledH3>
+            <StyledInput
+              required
+              name="preview"
+              value={cardPreview}
+              maxLength="100"
+              type="text"
+              placeholder="Vorschaubild URL"
+              onChange={handlePreviewChange}
+            ></StyledInput> </StyledLabel>
+             <StyledLabel>
             <StyledH3> Kurzbeschreibung:</StyledH3>
-
             <StyledInput
               required
               name="description"
