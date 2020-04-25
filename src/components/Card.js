@@ -3,6 +3,8 @@ import styled from 'styled-components/macro'
 import pink from '../images/pink.svg'
 import { firestore } from '../firebase'
 import CardDetails from '../pages/CardDetails'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Card({
   title,
@@ -61,6 +63,7 @@ export default function Card({
             : { display: 'none' }
         }
       >
+
         <CardDetails
           setCardDetailsVisible={setCardDetailsVisible}
           cardDetailsVisible={cardDetailsVisible}

@@ -11,24 +11,39 @@ import Favourite from './pages/Favourite'
 import Classroom from './pages/Classroom'
 import Navigation from './components/Navigation'
 import RenderCards from './components/RenderCards'
-import Filter from './components/Filter'
 import bookmarkImage from './images/bookmark.svg'
-import refresh from './images/refresh.svg'
+
 import { firestore } from './firebase'
 import { collectIdsAndDocs } from './utilities.js'
 import close from './images/close.svg'
-import CardDetailForm from './components/CardDetailForm'
+
 import SignIn from './pages/SignIn'
 
 function App() {
+  const classes = [
+    { value: 'Vorschule', label: 'Vorschule' },
+    { value: 'Klasse 1', label: 'Klasse 1' },
+    { value: 'Klasse 2', label: 'Klasse 2' },
+    { value: 'Klasse 3', label: 'Klasse 3' },
+    { value: 'Klasse 4', label: 'Klasse 4' },
+  ]
+
+  const subjects = [
+    { value: 'Mathematik', label: 'Mathematik' },
+    { value: 'Deutsch', label: 'Deutsch' },
+    { value: 'Englisch', label: 'Englisch' },
+    { value: 'Medien', label: 'Medien' },
+    { value: 'Sport', label: 'Sport' },
+    { value: 'Musik', label: 'Musik' },
+    { value: 'Kunst', label: 'Kunst' },
+    { value: 'Sachkunde', label: 'Sachkunde' },
+    { value: 'Religion', label: 'Religion' },
+    { value: 'Theater', label: 'Theater' },
+  ]
+const schoolName = 'Schulauswahl'
+const classesTitle = 'Jahrgangsfilter'
+const subjectsTitle = 'Fächerauswahl'
   const hamburgSchool = hamburg.hamburg
-  const schoolName = 'Schulauswahl'
-  const classesTitle = 'Jahrgangsfilter'
-  const subjectsTitle = 'Fächerauswahl'
-  const [schoolOption, setSchoolOption] = useState([])
-  const [classesValue, setClassesValue] = useState()
-  const [subjectsValue, setSubjectsValue] = useState()
-  const [schoolValue, setSchoolValue] = useState()
   const [cards, setCards] = useState([])
   const [levelStyle, setLevelStyle] = useState([
     { styleLevelBetter: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
@@ -36,14 +51,14 @@ function App() {
     { styleLevelLow: { boxShadow: 'inset 0 0 6px 2px lightgrey' } },
   ])
   const [level, setLevel] = useState('')
-  const [filteredCards, setFilteredCards] = useState(cards)
+  const [schoolOption, setSchoolOption] = useState([])
   const [active, setActive] = useState('home')
 
   function getCardsFromDatabase() {
     firestore.collection('cards').onSnapshot((snapshot) => {
       const dbCards = snapshot.docs.map(collectIdsAndDocs)
       setCards(dbCards)
-      setFilteredCards(dbCards)
+ 
     })
   }
 
@@ -73,6 +88,10 @@ function App() {
     }
   }, [level, setLevelStyle])
 
+ 
+
+
+
   useEffect(() => {
     setSchoolOption(
       hamburgSchool.map((school) => ({
@@ -81,73 +100,7 @@ function App() {
       }))
     )
   }, [hamburgSchool])
-
-  const classes = [
-    { value: 'Vorschule', label: 'Vorschule' },
-    { value: 'Klasse 1', label: 'Klasse 1' },
-    { value: 'Klasse 2', label: 'Klasse 2' },
-    { value: 'Klasse 3', label: 'Klasse 3' },
-    { value: 'Klasse 4', label: 'Klasse 4' },
-  ]
-
-  const subjects = [
-    { value: 'Mathematik', label: 'Mathematik' },
-    { value: 'Deutsch', label: 'Deutsch' },
-    { value: 'Englisch', label: 'Englisch' },
-    { value: 'Medien', label: 'Medien' },
-    { value: 'Sport', label: 'Sport' },
-    { value: 'Musik', label: 'Musik' },
-    { value: 'Kunst', label: 'Kunst' },
-    { value: 'Sachkunde', label: 'Sachkunde' },
-    { value: 'Religion', label: 'Religion' },
-    { value: 'Theater', label: 'Theater' },
-  ]
-
-  async function filterCards() {
-    let cardsToFilter
-    schoolValue || classesValue || subjectsValue
-      ? (cardsToFilter = filteredCards)
-      : (cardsToFilter = cards)
-
-    const filterCardsBySchool = await cardsToFilter.filter(
-      (card) => card.school === schoolValue
-    )
-    setFilteredCards(filterCardsBySchool)
-  }
-
-  async function classFilter() {
-    let cardsToFilter
-    schoolValue || classesValue || subjectsValue
-      ? (cardsToFilter = filteredCards)
-      : (cardsToFilter = cards)
-    const filterCardsByClass = await cardsToFilter.filter(
-      (card) => card.classroom === classesValue
-    )
-    setFilteredCards(filterCardsByClass)
-  }
-  async function subjecsFilter() {
-    let cardsToFilter
-    schoolValue || classesValue || subjectsValue
-      ? (cardsToFilter = filteredCards)
-      : (cardsToFilter = cards)
-    const filterCardsBySubject = await cardsToFilter.filter(
-      (card) => card.subject === subjectsValue
-    )
-    setFilteredCards(filterCardsBySubject)
-  }
-
-  useEffect(() => {
-    filterCards()
-  }, [schoolValue])
-
-  useEffect(() => {
-    subjecsFilter()
-  }, [subjectsValue])
-
-  useEffect(() => {
-    classFilter()
-  }, [classesValue])
-
+ 
   return (
     <Router>
       <AppGrid>
@@ -155,47 +108,28 @@ function App() {
           <Navigation active={active} setActive={setActive} />
         </HeaderSection>
         <ContentWrapper>
+
           <Switch>
             <Route exact path="/">
-              <SignIn />
-
-                <SelectFilter>
-                <Filter
-                  required={false}
-                  options={schoolOption}
-                  title={schoolName}
-                  setValue={setSchoolValue}
-                />
-                <Filter
-                  required={false}
-                  options={classes}
-                  title={classesTitle}
-                  setValue={setClassesValue}
-                />
-                <Filter
-                  required={false}
-                  options={subjects}
-                  title={subjectsTitle}
-                  setValue={setSubjectsValue}
-                />
-                <div style={{ margin: '22px 20px' }}>
-                  <H3>Filter zuücksetzen</H3>
-                  <RefreshButton onClick={() => window.location.reload(false)}>
-                    <RefreshImg src={refresh}></RefreshImg>
-                  </RefreshButton>
-                </div>
-              </SelectFilter>
+              
               <DescriptionSection>
                 <h1>Home Schooling - Schule zu Hause</h1>
-                <h2>Hier könnte noch etwas zum Inhalt stehen</h2>
-                <p>Und hier gibt es etwas zur Anwendung usw.</p>
+                <h2>Neue Nachrichten</h2>
+                <div style={{border: '1px solid lightgrey', borderRadius: 12,height: 250}} >
+
+
+                </div>
               </DescriptionSection>
-              <CardSectionWrapper>
-                <CardSection>
+             
+              <DescriptionSection>
+              <h2>Dein Stundenplan</h2> 
+              </DescriptionSection>
+              <CardSectionWrapper  >
+                <CardSection >
                   <RenderCards
                     levelStyle={levelStyle}
                     bookmarkImage={bookmarkImage}
-                    cards={filteredCards}
+                    cards={cards}
                   />
                 </CardSection>
               </CardSectionWrapper>
@@ -204,7 +138,7 @@ function App() {
           <Switch>
             <Route path="/create">
               <YousCards>
-                <StyledHeading>Deine Basis-Karten</StyledHeading>
+                <StyledHeading>Deine Lernkarten</StyledHeading>
                 <CardSection>
                   <RenderCards
                     levelStyle={levelStyle}
@@ -212,7 +146,7 @@ function App() {
                     cards={cards}
                   />
                 </CardSection>
-                <StyledHeading>Deine Detail-Karten</StyledHeading>
+               
                 <Create
                   setActive={setActive}
                   level={level}
@@ -232,7 +166,7 @@ function App() {
           </Switch>
           <Switch>
             <Route path="/profile">
-              <Profile />
+              <Profile cards={cards} schoolOption={schoolOption} setSchoolOption={setSchoolOption}/>
             </Route>
           </Switch>
           <Switch>
@@ -320,12 +254,6 @@ const CardSection = styled.header`
     justify-content: center;
   }
 `
-const SelectFilter = styled.section`
-  display: flex;
-  width: 100vw;
-  flex-wrap: wrap;
-  margin: 8px 20px;
-`
 
 const FooterSection = styled.header`
   background: linear-gradient(to right, #5e99cf, #5ebd99);
@@ -344,19 +272,8 @@ const CreateButtonImage = styled.img`
   width: 50px;
   height: 50px;
 `
-const RefreshButton = styled.button`
-  border-radius: 12px;
-  border: 1px solid lightgrey;
-  box-shadow: 0 0 10px 2px #cfcfcf;
-`
-const RefreshImg = styled.img`
-  height: 20px;
-  margin: 0;
-  padding: 8px;
-`
-const H3 = styled.h3`
-  margin: 0 0 10px 0;
-`
+
+
 const StyledHeading = styled.h1`
   margin: 40px;
 `

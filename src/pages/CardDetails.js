@@ -33,11 +33,7 @@ export default function CardDetails({ id, setCardDetailsVisible, cards }) {
           <h2 style={{ color: 'orange' }}>Basis-Informationen</h2>
           <h2>Titel: {card && card.title}</h2>
           <small>Autor: {card && card.author}</small>
-          <p>
-            Beschreibung:
-            {card && card.description}
-          </p>
-          <p>Lernlevel :{card && card.level}</p>
+          <p>Beschreibung: {card && card.description}</p>
         </div>
       </ContentSection>
       <CardDetailSection>
