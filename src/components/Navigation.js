@@ -35,7 +35,7 @@ export default function Navigation({ active, setActive }) {
         </StyledNavLink>
         <StyledNavLink to="/profile">
           <NavIcon src={profile}></NavIcon>
-          <span>Meine Profil</span>
+          <span>Mein Profil</span>
         </StyledNavLink>
       </Nav>
       <MobileNavWrapper>

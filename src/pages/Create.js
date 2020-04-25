@@ -7,10 +7,6 @@ import uuid from 'react-uuid'
 import { firestore } from '../firebase'
 
 export default function Create({
-  schoolOption,
-  schoolName,
-  classes,
-  classesTitle,
   subjects,
   subjectsTitle,
   cards,
@@ -83,14 +79,12 @@ export default function Create({
 
   async function handleSubmit(event) {
     event.preventDefault()
-    if (createSchoolValue && createClassValue && createSubjectsValue) {
+    if (createSubjectsValue) {
       const card = {
         title: title,
         description: description,
         author: author,
         authorId: authorId,
-        school: createSchoolValue,
-        classroom: createClassValue,
         subject: createSubjectsValue,
         color: color,
         level: level,
@@ -163,19 +157,7 @@ export default function Create({
               placeholder="Hier eintragen"
             ></StyledInput>
           </StyledLabel>
-          <Filter
-            required={required}
-            options={schoolOption}
-            title={schoolName}
-            setValue={setCreateSchoolValue}
-          />
-
-          <Filter
-            required={required}
-            options={classes}
-            title={classesTitle}
-            setValue={setCreateClassValue}
-          />
+         
           <Filter
             required={required}
             options={subjects}

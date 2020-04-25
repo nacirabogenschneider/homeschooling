@@ -81,6 +81,7 @@ const Header = styled.header`
   justify-content: flex-end;
   left: 10px;
   right: 10px;
+  z-index: 300;
 `
 const Footer = styled.footer`
   color: white;

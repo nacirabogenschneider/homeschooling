@@ -12,14 +12,14 @@ const firebaseConfig = {
   measurementId: 'G-T3QX62ZR7R',
 }
 
-firebase.initializeApp(firebaseConfig)
+export default firebase.initializeApp(firebaseConfig)
 
-// const settings = { timestampsInSnapshots: true }
+
 export const firestore = firebase.firestore()
 export const auth = firebase.auth()
-export const provider = new firebase.auth.GoogleAuthProvider
+export const provider = new firebase.auth.GoogleAuthProvider()
 export const signInWithGoogle = ()=>auth.signInWithPopup(provider)
 
-// firestore.settings(settings)
 
-export default firebase
+
+
