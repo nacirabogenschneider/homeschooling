@@ -5,7 +5,7 @@ import RenderTasks from '../components/RenderTasks'
 import { firestore } from '../firebase'
 import CardDetailForm from '../components/CardDetailForm'
 
-export default function CardDetails({ id, setCardDetailsVisible, cards }) {
+export default function CardDetails({ id, setCardDetailsVisible, cards, cardPreview }) {
   const [card, setCard] = useState()
 
   useEffect(() => {
@@ -28,6 +28,7 @@ export default function CardDetails({ id, setCardDetailsVisible, cards }) {
           onClick={handleCloseClick}
         ></ImgClose>
       </Header>
+      <HeaderImage src={cardPreview}></HeaderImage>
       <ContentSection>
         <div>
           <h2 style={{ color: 'orange' }}>Basis-Informationen</h2>
@@ -41,11 +42,19 @@ export default function CardDetails({ id, setCardDetailsVisible, cards }) {
         <RenderTasks card={card} />
         <CardDetailForm card={card} />
       </CardDetailSection>
-      <div>hier könnten noch möglichkeiten zum Fragen stellen sein.</div>
+      <div style={{padding: '0 10px 40px 10px', color: 'lightgrey'}}> &#169; 2020 Nacira Design</div>
       <Footer></Footer>
     </DetailSection>
   )
 }
+
+const HeaderImage = styled.img`
+object-fit: cover; 
+object-position: center; 
+height: 250px;
+width: 100%;
+box-shadow: 0 0 10px 2px #cfcfcf;
+`
 const DetailSection = styled.div`
   position: absolute;
   top: 10px;
@@ -54,7 +63,6 @@ const DetailSection = styled.div`
   right: 10px;
   bottom: 10px;
   display: flex;
-
   flex-direction: column;
   overflow-x: scroll;
   border-radius: 12px;

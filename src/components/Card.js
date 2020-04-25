@@ -5,6 +5,7 @@ import { firestore } from '../firebase'
 import CardDetails from '../pages/CardDetails'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 export default function Card({
   title,
@@ -70,6 +71,7 @@ export default function Card({
           cardDetailsVisible={cardDetailsVisible}
           cards={cards}
           id={id}
+          cardPreview={cardPreview}
         />
       </div>
     </CardBox>
@@ -85,11 +87,13 @@ const CardBox = styled.section`
   box-shadow: 0 0 10px 2px #cfcfcf;
 `
 const Preview = styled.img`
+  object-fit: cover; 
+  object-position: center; 
   height: 115px;
   width: 195px;
   background: white;
   margin: 0 0 8px 0;
-  box-shadow: inset 0 0 6px 2px #787878;
+  
   
 `
 const StyledRows = styled.div`

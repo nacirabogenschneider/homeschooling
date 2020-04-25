@@ -229,6 +229,7 @@ const ContentWrapper = styled.section`
   width: 100vw;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `
 const DescriptionSection = styled.section`
   display: flex;

@@ -128,7 +128,7 @@ function toggle(){
       </div> 
           {ReactHtmlParser(profileText)}
         </ProfileContentWrapper>
-        <div style={{width: '100%', display: `${visibility? 'flex': 'none'}`, margin: '0 20px 0 0'}}>
+        <div style={{width: '100%', display: `${visibility? 'flex': 'none'}`, margin: '0 20px'}}>
         <Editor text={profileText} setText={setProfileText}/>  
         
         </div>

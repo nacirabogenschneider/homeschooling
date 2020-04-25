@@ -28,22 +28,22 @@ export default function CardDetailForm({ card }) {
 
   return (
     <FormSection>
-      <form>
+      <form style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
         <h2>Neue Aufgabe erstellen</h2>
         <p>Card-Id: {id}</p>
+        <h4>Vorschau</h4>
         <p>Titel: {tasktitle}</p>
         <div style={{ paddingBottom: 20 }}>Inhalt: {ReactHtmlParser(text)}</div>
-
         <div
           style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
         >
-          <label>Aufgabe</label>
+          <label>Titel der Aufgabe</label>
           <input
             type="text"
             placeholter="Überschrift"
             onChange={(event) => setTasksTitle(event.target.value)}
           ></input>
-          <label>Textfeld</label>
+          
           <Editor text={text} setText={setText} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -71,7 +71,6 @@ const FormSection = styled.section`
   margin: 24px 0;
   background: #f5f5f5;
   @media (max-width: 768px) {
-    width: 100cw;
     justify-content: center;
   }
 `
