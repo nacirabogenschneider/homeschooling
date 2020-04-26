@@ -6,7 +6,7 @@ import styled from 'styled-components/macro'
 import ReactHtmlParser from 'react-html-parser'
 import uuid from 'react-uuid'
 
-export default function CardDetailForm({ card }) {
+export default function CardDetailForm({ card, tasks, setTasks }) {
   const [tasktitle, setTasksTitle] = useState('')
   const [taskContent, setTaskContent] = useState('')
   const id = card && card.id
@@ -16,11 +16,11 @@ export default function CardDetailForm({ card }) {
     event.preventDefault()
     const cardRef = await firestore.doc(`cards/${id}`)
     const taskObject = { title: tasktitle, task: text, taskId: uuid() }
+    tasks && setTasks && setTasks([...tasks, taskObject])
     card &&
       cardRef.update({
         tasks: [...card.tasks, taskObject],
       })
-
     setText('')
   }
 
@@ -55,12 +55,18 @@ export default function CardDetailForm({ card }) {
 }
 
 const SubmitButton = styled.button`
-  border: 2px solid orange;
-  margin: 50px 0 20px 0;
-  padding: 8px;
-  font-size: 1.2rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px 2px #cfcfcf;
+font-size: 1.1rem;
+display: flex;
+justify-content: center:
+align-items: center;
+border: none:
+width: 200px; 
+margin: 40px;
+background: white;
+padding: 12px;
+border: 1px solid grey;
+border-radius: 12px;
+box-shadow: inset 0 0 10px 3px darkgrey;
 `
 const FormSection = styled.section`
   display: flex;

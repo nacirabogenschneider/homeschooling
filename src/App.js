@@ -116,8 +116,6 @@ const subjectsTitle = 'Fächerauswahl'
                 <h1>Home Schooling - Schule zu Hause</h1>
                 <h2>Neue Nachrichten</h2>
                 <div style={{border: '1px solid lightgrey', borderRadius: 12,height: 250}} >
-
-
                 </div>
               </DescriptionSection>
              
@@ -232,8 +230,9 @@ const ContentWrapper = styled.section`
   align-items: center;
 `
 const DescriptionSection = styled.section`
+  
   display: flex;
-  margin: 8px 20px;
+  padding: 40px;
   flex-direction: column;
   justify-content: center;
   margin: 20px 80px 50px 50px;

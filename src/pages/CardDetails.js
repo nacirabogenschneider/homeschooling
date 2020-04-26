@@ -4,21 +4,24 @@ import close from '../images/close.svg'
 import RenderTasks from '../components/RenderTasks'
 import { firestore } from '../firebase'
 import CardDetailForm from '../components/CardDetailForm'
+import { collectIdsAndDocs } from '../utilities.js'
 
 export default function CardDetails({ id, setCardDetailsVisible, cards, cardPreview }) {
   const [card, setCard] = useState()
-
+  const cardRef = firestore.doc(`cards/${id}`)
+  const [tasks, setTasks] = useState()
+  
   useEffect(() => {
     const find = cards.find((card) => card.id === id)
     setCard(find)
   }, [card])
 
-  const cardRef = firestore.doc(`cards/${id}`)
+
   async function handleCloseClick() {
     cardRef.update({ isClicked: false })
     setCardDetailsVisible(false)
   }
-
+  
   return (
     <DetailSection id={card && card.id}>
       <Header>
@@ -39,8 +42,8 @@ export default function CardDetails({ id, setCardDetailsVisible, cards, cardPrev
       </ContentSection>
       <CardDetailSection>
         <h2 style={{ color: 'orange' }}>Detail-Informationen</h2>
-        <RenderTasks card={card} />
-        <CardDetailForm card={card} />
+        <RenderTasks id={id} tasks={tasks} setTasks={setTasks}/>
+        <CardDetailForm tasks={tasks}setTasks={setTasks} card={card} />
       </CardDetailSection>
       <div style={{padding: '0 10px 40px 10px', color: 'lightgrey'}}> &#169; 2020 Nacira Design</div>
       <Footer></Footer>

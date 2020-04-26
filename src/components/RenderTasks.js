@@ -5,35 +5,41 @@ import closeBlack from '../images/closeBlack.svg'
 import { firestore } from '../firebase'
 
 
-export default function RenderTasks({ card }) {
-  const [tasks, setTasks] = useState()
+export default function RenderTasks({ id, tasks, setTasks }) {
+ 
+const [taskToRender, setTaskToRender] = useState()
+const cardRef = firestore.doc(`cards/${id}`)
 
-  useEffect(() => {
-    setSelectedTasks()
-  }, [card])
+useEffect(()=>{
+setTasksTo()
+}, [tasks])
 
-  async function setSelectedTasks() {
-    const taskCard = await card
-    card && setTasks(taskCard.tasks)
-  }
+
+
+async function setTasksTo(){
+  const allData = await cardRef.get()
+  const getData = allData.data()
+  setTaskToRender(getData.tasks)
+  setTasks(getData.tasks)
+}
+
  async function removeTask(event){
-   const taskToRemoveId = event.target.id
-   console.log(taskToRemoveId)
-  const cardRef = await firestore.doc(`cards/${card.id}`)
-    const newTaskList = tasks.filter(task => task.taskId !== taskToRemoveId)
-    console.log('newTaskList', newTaskList)
-    
+  const taskToRemoveId = event.target.id
+  const cardRef = await firestore.doc(`cards/${id}`)
+  const newTaskList = taskToRender.filter(task => task.taskId !== taskToRemoveId)
     cardRef.update({
       tasks: newTaskList,
     })
+    setTasks && setTasks(newTaskList)
+    taskToRender && setTaskToRender(newTaskList)
   }
 
   return (
     <div>
-      {tasks &&
-        tasks.map((task) => (
-          <RenderSection key={tasks.indexOf(task)}>
-            <TaskNumber>{tasks.indexOf(task) + 1}</TaskNumber>
+      {taskToRender &&
+        taskToRender.map((task) => (
+          <RenderSection key={taskToRender.indexOf(task)}>
+            <TaskNumber>{taskToRender.indexOf(task) + 1}</TaskNumber>
             <OrangeLine></OrangeLine>
             <BasisInformation>
               <img style={{height: 24}} src={closeBlack}  id={task.taskId} onClick={removeTask}></img>
@@ -43,14 +49,14 @@ export default function RenderTasks({ card }) {
               <input
                 type="radio"
                 id="notdone"
-                name={tasks.indexOf(task)}
+                name={taskToRender.indexOf(task)}
                 value="notdone"
               ></input>
               <label htmlFor="notdone">zu bearbeiten</label>
               <input
                 type="radio"
                 id="done"
-                name={tasks.indexOf(task)}
+                name={taskToRender.indexOf(task)}
                 value="done"
               ></input>
               <label htmlFor="done">erledigt</label>
