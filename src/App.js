@@ -114,13 +114,11 @@ const subjectsTitle = 'Fächerauswahl'
               
               <DescriptionSection>
                 <h1>Home Schooling - Schule zu Hause</h1>
-                <h2>Neue Nachrichten</h2>
-                <div style={{border: '1px solid lightgrey', borderRadius: 12,height: 250}} >
-                </div>
-              </DescriptionSection>
-             
-              <DescriptionSection>
-              <h2>Dein Stundenplan</h2> 
+
+                <h3>Home Schooling ist ein Projekt, welches Lehrer und Eltern dabei unterstützen soll, die Lernmaterialien für das 
+                  home schooling digital zu unterstützen und sich zu Hause noch besser zu strukturiere. Im Stundenplan finden Sie 
+                  eine Wocheneinteilung der Fächer. Diese soll zur Orientierung dienen, welches Fach wie viel der Lernzeit einnehmen sollte.
+                </h3>
               </DescriptionSection>
               <CardSectionWrapper  >
                 <CardSection >
@@ -230,25 +228,24 @@ const ContentWrapper = styled.section`
   align-items: center;
 `
 const DescriptionSection = styled.section`
-  
+  width; 100%;
   display: flex;
-  padding: 40px;
+  padding: 20px;
   flex-direction: column;
   justify-content: center;
-  margin: 20px 80px 50px 50px;
+  margin: 20px 50px 50px 50px;
 `
 const CardSectionWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
 `
 const CardSection = styled.header`
   display: flex;
-  width: 100vw;
+  width: 100%;
   justify-content: flex-start;
   flex-wrap: wrap;
   background: transparent;
-  margin: 0 50px;
+  margin: 0 40px 40px 40px;
   @media (max-width: 768px) {
     margin: 0 0 50px 0;
     justify-content: center;

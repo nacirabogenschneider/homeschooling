@@ -42,7 +42,7 @@ export default function CardDetails({ id, setCardDetailsVisible, cards, cardPrev
       </ContentSection>
       <CardDetailSection>
         <h2 style={{ color: 'orange' }}>Detail-Informationen</h2>
-        <RenderTasks id={id} tasks={tasks} setTasks={setTasks}/>
+         <RenderTasks id={id} tasks={tasks} setTasks={setTasks}/> 
         <CardDetailForm tasks={tasks}setTasks={setTasks} card={card} />
       </CardDetailSection>
       <div style={{padding: '0 10px 40px 10px', color: 'lightgrey'}}> &#169; 2020 Nacira Design</div>
@@ -50,6 +50,7 @@ export default function CardDetails({ id, setCardDetailsVisible, cards, cardPrev
     </DetailSection>
   )
 }
+
 
 const HeaderImage = styled.img`
 object-fit: cover; 

@@ -12,7 +12,7 @@ const cardRef = firestore.doc(`cards/${id}`)
 
 useEffect(()=>{
 setTasksTo()
-}, [tasks])
+}, [tasks, setTasksTo])
 
 
 
@@ -20,7 +20,7 @@ async function setTasksTo(){
   const allData = await cardRef.get()
   const getData = allData.data()
   setTaskToRender(getData.tasks)
-  setTasks(getData.tasks)
+  
 }
 
  async function removeTask(event){
@@ -30,12 +30,12 @@ async function setTasksTo(){
     cardRef.update({
       tasks: newTaskList,
     })
-    setTasks && setTasks(newTaskList)
+    
     taskToRender && setTaskToRender(newTaskList)
   }
 
   return (
-    <div>
+    <div >
       {taskToRender &&
         taskToRender.map((task) => (
           <RenderSection key={taskToRender.indexOf(task)}>
@@ -44,7 +44,7 @@ async function setTasksTo(){
             <BasisInformation>
               <img style={{height: 24}} src={closeBlack}  id={task.taskId} onClick={removeTask}></img>
               <h2>{task.title}</h2>
-              <div>{ReactHtmlParser(task.task)}</div>
+              <StyledTasks style={{width: '100%'}}>{ReactHtmlParser(task.task)}</StyledTasks>
               <div>{task.upload}</div>
               <input
                 type="radio"
@@ -67,6 +67,14 @@ async function setTasksTo(){
   )
 }
 
+
+const StyledTasks = styled.div`
+p{
+  img{
+    max-width: 350px;
+  }
+}
+`
 const OrangeLine = styled.div`
   margin: 8px 0;
   height: 30px;
@@ -85,7 +93,6 @@ const RenderSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `
 const TaskNumber = styled.div`
   margin-top: 8px;
