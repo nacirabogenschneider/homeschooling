@@ -264,6 +264,7 @@ const CreateButton = styled(Link)`
   right: 12px;
   top: 90vh;
   bottom: 10vh;
+  z-index: 999;
 `
 const CreateButtonImage = styled.img`
   width: 50px;
