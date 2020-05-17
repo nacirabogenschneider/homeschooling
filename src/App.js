@@ -55,12 +55,15 @@ const subjectsTitle = 'Fächerauswahl'
   const [active, setActive] = useState('home')
 
   function getCardsFromDatabase() {
-    firestore.collection('cards').onSnapshot((snapshot) => {
+    firestore
+    .collection('cards')
+    .onSnapshot((snapshot) => {
       const dbCards = snapshot.docs.map(collectIdsAndDocs)
       setCards(dbCards)
  
     })
   }
+
 
   useEffect(() => {
     getCardsFromDatabase()
@@ -89,9 +92,6 @@ const subjectsTitle = 'Fächerauswahl'
   }, [level, setLevelStyle])
 
  
-
-
-
   useEffect(() => {
     setSchoolOption(
       hamburgSchool.map((school) => ({
@@ -115,9 +115,7 @@ const subjectsTitle = 'Fächerauswahl'
               <DescriptionSection>
                 <h1>Home Schooling - Schule zu Hause</h1>
 
-                <h3>Home Schooling ist ein Projekt, welches Lehrer und Eltern dabei unterstützen soll, die Lernmaterialien für das 
-                  home schooling digital zu unterstützen und sich zu Hause noch besser zu strukturiere. Im Stundenplan finden Sie 
-                  eine Wocheneinteilung der Fächer. Diese soll zur Orientierung dienen, welches Fach wie viel der Lernzeit einnehmen sollte.
+                <h3>Home Schooling ist ein Projekt, welches das Homeschooling erleichtern soll.
                 </h3>
               </DescriptionSection>
               <CardSectionWrapper  >
@@ -174,7 +172,7 @@ const subjectsTitle = 'Fächerauswahl'
             <Route path="/favourite">
               <Favourite
                 cards={cards}
-                levelStyle={levelStyle}
+                levelStyle={levelStyle} 
                 bookmarkImage={bookmarkImage}
               />
             </Route>
@@ -184,7 +182,7 @@ const subjectsTitle = 'Fächerauswahl'
               <Classroom />
             </Route>
           </Switch>
-          <CreateButton to="/create">
+          <CreateButton to="/create" >
             <CreateButtonImage
               src={add}
               alt="create button"
@@ -265,6 +263,7 @@ const CreateButton = styled(Link)`
   top: 90vh;
   bottom: 10vh;
   z-index: 999;
+  transform: translate3d(0,0,0) translateZ(1000px);
 `
 const CreateButtonImage = styled.img`
   width: 50px;

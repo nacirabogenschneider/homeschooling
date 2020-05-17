@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import styled from 'styled-components/macro'
 import pink from '../images/pink.svg'
 import { firestore } from '../firebase'
@@ -6,6 +6,7 @@ import CardDetails from '../pages/CardDetails'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+import {getCards} from '../dbServices.js'
 
 export default function Card({
   title,
@@ -23,6 +24,7 @@ export default function Card({
   isClicked,
   cardPreview,
 }) {
+  
   const cardRef = firestore.doc(`cards/${id}`)
   const remove = () => cardRef.delete()
   const update = () => cardRef.update({ isBookmarked: !isBookmarked })
@@ -31,6 +33,8 @@ export default function Card({
     setCardDetailsVisible && setCardDetailsVisible(!cardDetailsVisible)
     cardRef.update({ isClicked: true })
   }
+  
+
 
   return (
     <CardBox style={{ background: color }} id={id}>

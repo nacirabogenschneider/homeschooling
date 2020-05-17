@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import home from '../images/home.svg'
+import doc from '../images/document.svg'
 import profile from '../images/profile.svg'
 import classroom from '../images/class.svg'
 import fav from '../images/fav.svg'
 import today from '../images/today.svg'
 import { NavLink } from 'react-router-dom'
 import menu from '../images/menu.svg'
-import close from '../images/close.svg'
 import { Transition } from 'react-spring/renderprops'
-
+import closeBlack from '../images/closeBlack.svg'
 export default function Navigation({ active, setActive }) {
   const [toggle, setToggle] = useState(false)
   const onToggle = () => setToggle(!toggle)
@@ -20,6 +20,10 @@ export default function Navigation({ active, setActive }) {
         <StyledNavLink to="/">
           <NavIcon src={home}></NavIcon>
           <span>Home</span>
+        </StyledNavLink>
+        <StyledNavLink to="/create">
+          <NavIcon src={doc}></NavIcon>
+          <span>Karten erstellen</span>
         </StyledNavLink>
         <StyledNavLink to="/favourite">
           <NavIcon src={fav}></NavIcon>
@@ -47,6 +51,14 @@ export default function Navigation({ active, setActive }) {
             }
           >
             <NavIcon src={home}></NavIcon>
+          </StyledSingleNavLink>
+          <StyledSingleNavLink
+            onClick={() => setActive('doc')}
+            style={
+              active === 'doc' ? { display: 'block' } : { display: 'none' }
+            }
+          >
+            <NavIcon src={doc}></NavIcon>
           </StyledSingleNavLink>
 
           <StyledSingleNavLink
@@ -97,7 +109,7 @@ export default function Navigation({ active, setActive }) {
               toggle
                 ? (props) => (
                     <div style={props}>
-                      <MenuIcon src={close}></MenuIcon>
+                      <MenuIcon src={closeBlack}></MenuIcon>
                     </div>
                   )
                 : (props) => (
@@ -115,6 +127,12 @@ export default function Navigation({ active, setActive }) {
             <StyledNavLink to="/" onClick={() => setActive('home')}>
               <NavIcon src={home}></NavIcon>
               <StyledSpan>Home</StyledSpan>
+            </StyledNavLink>
+          </label>
+          <label onClick={onToggle}>
+            <StyledNavLink to="/create" onClick={() => setActive('doc')}>
+              <NavIcon src={doc}></NavIcon>
+              <StyledSpan>Karten erstellen</StyledSpan>
             </StyledNavLink>
           </label>
           <label onClick={onToggle}>
