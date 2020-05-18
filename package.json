@@ -26,7 +26,8 @@
     "react-select": "3.1.0",
     "react-spring": "^8.0.27",
     "react-uuid": "1.0.2",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "snyk": "^1.316.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,7 +35,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "http": "http-server -p 5006",
-    "api": "node server.js"
+    "api": "node server.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +54,7 @@
       "last 1 safari version"
     ]
   },
+  "snyk": true
   "devDependencies": {
     "prettier": "2.0.5"
   }
