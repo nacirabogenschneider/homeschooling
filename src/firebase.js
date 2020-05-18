@@ -23,5 +23,4 @@ const storage = firebase.storage()
 const provider = new firebase.auth.GoogleAuthProvider()
 const signInWithGoogle = ()=>auth.signInWithPopup(provider)
 
-
 export { firestore, auth, storage, signInWithGoogle }
