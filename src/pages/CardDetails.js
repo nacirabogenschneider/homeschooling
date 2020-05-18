@@ -4,7 +4,7 @@ import close from '../images/close.svg'
 import RenderTasks from '../components/RenderTasks'
 import { firestore } from '../firebase'
 import CardDetailForm from '../components/CardDetailForm'
-import { collectIdsAndDocs } from '../utilities.js'
+
 
 export default function CardDetails({ id, setCardDetailsVisible, cards, cardPreview }) {
   const [card, setCard] = useState()

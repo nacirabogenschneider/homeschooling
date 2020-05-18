@@ -55,4 +55,7 @@
     ]
   },
   "snyk": true
+  "devDependencies": {
+    "prettier": "2.0.5"
+  }
 }

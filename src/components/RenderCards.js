@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from './Card'
+import {getCards} from '../dbServices.js'
 
 export default function RenderCard({
   cards,
@@ -10,6 +11,14 @@ export default function RenderCard({
   selectedCard,
 }) {
   const [cardDetailsVisible, setCardDetailsVisible] = useState(false)
+  const [cardsDB, setCardsDB] = useState([])
+  
+  useEffect(()=>{
+   const dataFromDb = getCards()
+    setCardsDB(dataFromDb)
+    console.log('DATA', dataFromDb)
+  }, [])
+  
 
   return cards.map((card) => (
     <Card

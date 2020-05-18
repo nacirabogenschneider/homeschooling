@@ -40,7 +40,7 @@ export default function Create({
   const [cardPreview, setCardPreview]= useState('')
 
   useEffect(() => {
-    setActive('create')
+    setActive('doc')
   }, [])
   useEffect(() => {
     if (createSubjectsValue) {
